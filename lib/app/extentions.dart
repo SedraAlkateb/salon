@@ -1,7 +1,6 @@
 
 import 'package:salon/app/constants.dart';
 import 'package:sizer/sizer.dart';
-
 extension NonNullString on String?{
   String orEmpty(){
     if(this==null){

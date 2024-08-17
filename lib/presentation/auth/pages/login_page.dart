@@ -39,7 +39,6 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   height: 60,
                   child: ListView.builder(
-
                     physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,

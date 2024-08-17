@@ -9,7 +9,6 @@ abstract class Repository{
  Future<Either<Failure,Token>>login(LoginRequest loginRequest);
  Future<Either<Failure,Token>>loginAdmin(LoginRequest loginRequest);
  Future<Either<Failure,Token>>customerLogin(LoginRequest loginRequest);
-
  Future<Either<Failure,AllAdminModel>>allAdmin();
  Future<Either<Failure,ViewAdmin>>viewAdmin(int id);
  Future<Either<Failure,MessageResponse>>deleteAdmin(int id);

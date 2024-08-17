@@ -46,7 +46,8 @@ String name="";
       if(event is AllSalon){
         salons=[];
         emit(SalonsLoadingState());
-        ( await salonsUsecase. execute()).fold(
+        ( await salonsUsecase.execute(
+        )).fold(
 
       (failure)  {
       emit(SalonsErrorState(failure: failure));
