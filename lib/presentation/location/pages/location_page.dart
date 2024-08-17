@@ -4,25 +4,17 @@ import 'package:salon/presentation/resources/assets_manager.dart';
 import 'package:salon/presentation/resources/color_manager.dart';
 import 'package:salon/presentation/resources/values_manager.dart';
 
-class LocationPage extends StatefulWidget {
+
+class LocationPage extends StatelessWidget {
+  const LocationPage({super.key,required this.center});
   final LatLng center;
-
-  LocationPage({required this.center});
-
-  @override
-  State<LocationPage> createState() => LocationPageState();
-}
-
-class LocationPageState extends State<LocationPage> {
-  GoogleMapController? _controller;
-
   void _onMapCreated(GoogleMapController controller) {
+    GoogleMapController _controller;
     _controller = controller;
   }
 
   @override
   Widget build(BuildContext context) {
-    // تعريف اسم للموقع (على سبيل المثال)
     String locationName = 'My Location';
 
     return Scaffold(
@@ -49,16 +41,16 @@ class LocationPageState extends State<LocationPage> {
       body: GoogleMap(
         onMapCreated: _onMapCreated,
         initialCameraPosition: CameraPosition(
-          target: widget.center, // استخدام LatLng من الكونستركتر
+          target: center, // استخدام LatLng من الكونستركتر
           zoom: 11.0,
         ),
         markers: {
           Marker(
-            markerId: MarkerId(widget.center.toString()),
-            position: widget.center,
+            markerId: MarkerId(center.toString()),
+            position: center,
             infoWindow: InfoWindow(
               title: locationName,
-              snippet: widget.center.toString(),
+              snippet: center.toString(),
             ),
           ),
         },
@@ -66,3 +58,4 @@ class LocationPageState extends State<LocationPage> {
     );
   }
 }
+

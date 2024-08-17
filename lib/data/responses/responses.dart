@@ -11,8 +11,9 @@ class BaseResponse {
 //////////ForMessage
 @JsonSerializable()
 class MessageResponse extends BaseResponse{
-
-  MessageResponse();
+  @JsonKey(name: "message")
+  String? message;
+  MessageResponse(this.message);
   // from json
   factory MessageResponse.fromJson(Map<String,dynamic>json)=>
       _$MessageResponseFromJson(json);
@@ -433,3 +434,147 @@ class ShowEmployeeBaseResponse extends BaseResponse{
   Map<String,dynamic>toJson()=>
       _$ShowEmployeeBaseResponseToJson(this);
 }
+
+@JsonSerializable()
+class SalonCardResponse {
+  @JsonKey(name: "id")
+  int id;
+  @JsonKey(name: "name")
+  String name;
+
+  SalonCardResponse(this.id, this.name);
+
+  factory SalonCardResponse.fromJson(Map<String,dynamic>json)=>
+      _$SalonCardResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$SalonCardResponseToJson(this);
+}
+@JsonSerializable()
+class CardUserResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "salon")
+  SalonCardResponse? salon;
+  CardUserResponse(this.id, this.salon);
+
+  factory CardUserResponse.fromJson(Map<String,dynamic>json)=>
+      _$CardUserResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$CardUserResponseToJson(this);
+}
+@JsonSerializable()
+class CardsUserResponse extends BaseResponse {
+  List<CardUserResponse> cards;
+
+
+  CardsUserResponse(this.cards);
+
+  factory CardsUserResponse.fromJson(Map<String,dynamic>json)=>
+      _$CardsUserResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$CardsUserResponseToJson(this);
+}
+@JsonSerializable()
+class ServiceCardResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "name")
+  String? name;
+  @JsonKey(name: "price")
+  int? price;
+
+
+  ServiceCardResponse(
+      this.id, this.name, this.price);
+
+  factory ServiceCardResponse.fromJson(Map<String,dynamic>json)=>
+      _$ServiceCardResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$ServiceCardResponseToJson(this);
+}
+@JsonSerializable()
+class AppointmentCardResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "date")
+  String? date;
+  @JsonKey(name: "time")
+  String? time;
+
+
+  AppointmentCardResponse(this.id, this.date, this.time);
+
+  factory AppointmentCardResponse.fromJson(Map<String,dynamic>json)=>
+      _$AppointmentCardResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$AppointmentCardResponseToJson(this);
+}
+@JsonSerializable()
+class AppointmentsResponse {
+
+  //
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "appointment")
+  AppointmentCardResponse? appointment;
+  @JsonKey(name: "service")
+  ServiceCardResponse? service;
+  @JsonKey(name: "salon")
+  SalonCardResponse? salon;
+
+  AppointmentsResponse(this.id, this.appointment, this.service, this.salon);
+
+  factory AppointmentsResponse.fromJson(Map<String,dynamic>json)=>
+      _$AppointmentsResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$AppointmentsResponseToJson(this);
+}
+@JsonSerializable()
+class AppointmentsBaseResponse extends BaseResponse {
+  @JsonKey(name: "appointments")
+  List<AppointmentsResponse> appointments;
+  @JsonKey(name: "totalPrice")
+  int ? totalPrice;
+  AppointmentsBaseResponse(this.appointments,this.totalPrice);
+
+  factory AppointmentsBaseResponse.fromJson(Map<String,dynamic>json)=>
+      _$AppointmentsBaseResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$AppointmentsBaseResponseToJson(this);
+}
+@JsonSerializable()
+class ShowAppointmentBaseResponse extends BaseResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "service")
+  ServiceCardResponse ? service;
+  @JsonKey(name: "appointment")
+  AppointmentCardResponse?appointment;
+  @JsonKey(name: "salon")
+  SalonCardResponse ?salon;
+
+  ShowAppointmentBaseResponse(this.id,this.service,this.appointment,this.salon);
+
+  factory ShowAppointmentBaseResponse.fromJson(Map<String,dynamic>json)=>
+      _$ShowAppointmentBaseResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$ShowAppointmentBaseResponseToJson(this);
+}
+
+

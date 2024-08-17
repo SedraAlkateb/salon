@@ -123,3 +123,27 @@ final class ChangeSalonImageState extends SalonState {
   @override
   List<Object?> get props =>[image];
 }
+class AddLocationState extends SalonState{
+ Set<Marker>  marker;
+  AddLocationState(this.marker);
+  @override
+  List<Object?> get props =>[marker];
+}
+
+final class AddSalonState extends SalonState {
+
+  AddSalonState();
+  @override
+  List<Object?> get props =>[];
+}
+final class AddSalonErrorState extends SalonState {
+  final Failure failure;
+  AddSalonErrorState({required this.failure});
+  @override
+  List<Object?> get props =>[failure];
+}
+final class AddSalonLoadingState extends SalonState {
+  AddSalonLoadingState();
+  @override
+  List<Object?> get props =>[];
+}

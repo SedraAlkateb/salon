@@ -140,6 +140,8 @@ class LoginPage extends StatelessWidget {
    if(state is LogInState){
      Constants.type==2?
      Navigator.of(context).pushNamed(Routes.userNav):
+     Constants.type==1?
+     Navigator.of(context).pushNamed(Routes.services):
      Navigator.of(context).pushNamed(Routes.homeAdmin);
    }
   },

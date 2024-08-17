@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:salon/data/network/requests/requsets.dart';
 import 'package:salon/domain/models/models.dart';
 import 'package:salon/data/network/failure.dart';
+import 'package:salon/domain/usecase/add_service_usecase.dart';
 import 'package:salon/domain/usecase/all_services_usecase.dart';
 import 'package:salon/domain/usecase/delete_service_usecase.dart';
 import 'package:salon/domain/usecase/view_service_usecase.dart';
@@ -17,12 +21,14 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
   AllServicesUsecase servicesUsecase;
   DeleteServiceUsecase deleteServiceUsecase;
   ViewServiceUsecase viewServiceUsecase;
+  AddServiceUsecase addServiceUsecase;
   CreateServiceObject createServiceObject=CreateServiceObject
     ("", "", null, "", "", 0);
   ServiceBloc(
       this.servicesUsecase,
       this.viewServiceUsecase,
-      this.deleteServiceUsecase
+      this.deleteServiceUsecase,
+      this.addServiceUsecase
       ) : super(ServiceInitial()) {
     on<ServiceEvent>((event, emit) async{
       if(event is AllService){
@@ -65,6 +71,34 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       }
 
       );
+      }
+      if(event is AddEmployeeToService){
+        createServiceObject=createServiceObject.copyWith(employeeId: event.id);
+      }
+      if(event is AddImageToService){
+        createServiceObject=createServiceObject.copyWith(image: event.image);
+        emit(AddImageToServiceState(event.image));
+      }
+      if(event is ChangeStatusFoeServiceEvent){
+        createServiceObject=createServiceObject.copyWith(status: event.status);
+        emit(ChangeStatusServiceState(status: event.status));
+      }
+      if(event is AddServiceEvent){
+        emit(AddServiceLoadingState());
+
+        ( await addServiceUsecase. execute(
+          AddServiceReq(event.name, event.desc, createServiceObject.image,
+              createServiceObject.status, int.parse(event.price), createServiceObject.employeeId)
+        )).fold(
+                (failure)  {
+              emit(AddServiceErrorState(failure: failure));
+            },
+                (data)  async{
+            
+              emit(AddServiceState());
+            }
+
+        );
       }
     });
   }

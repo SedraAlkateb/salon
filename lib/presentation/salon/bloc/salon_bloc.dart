@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:salon/data/network/failure.dart';
 import 'package:salon/data/network/requests/requsets.dart';
 import 'package:salon/domain/models/models.dart';
@@ -25,10 +26,11 @@ class SalonBloc extends Bloc<SalonEvent, SalonState> {
   UpdateSalonUsecase updateSalonUsecase;
   StoreSalonUsecase storeSalonUsecase;
   ShowSalonModel? salonModel;
-  final  CreateSalonObject salon=CreateSalonObject("", "", null, "active") ;
-
+  CreateSalonObject salon=CreateSalonObject("", "", null, "active","","") ;
+   LatLng center=LatLng(33.515343,36.289590);
   File? image1;
 int ? id;
+
 String name="";
 
   List<SalonModel> salons=[];
@@ -104,8 +106,9 @@ String name="";
         emit(CheckDescriptionSalonState());
       }
       if(event is ChangeStatusEvent){
-        print(event.status);
-        salonModel!.status=event.status;
+  //      print(event.status);
+    //    salonModel!.status=event.status;
+        salon=salon.copyWith(status: event.status);
         emit(ChangeStatusSalonState(status: event.status));
       }
       if(event is UpdateSalonEvent){
@@ -129,7 +132,7 @@ String name="";
         );
       }
       if(event is ChangeImageSalon){
-        image1=event.image;
+        salon= salon.copyWith(image: event.image);
        emit(ChangeSalonImageState(event.image));
       }
       if(event is UpdateSalonEvent){
@@ -143,13 +146,38 @@ String name="";
                 adminId: id
             )
         )).fold(
-
                 (failure)  {
               emit(UpdateSalonErrorState(failure: failure));
             },
                 (data)  async{
               emit(UpdateSalonState());
             }
+        );
+      }
+if(event is AddLocationSalonEvent){
+  salon=salon.copyWith(lat: event.lat.toString());
+  salon=salon.copyWith(lng: event.lng.toString());
+  emit(AddLocationState({ Marker(
+    markerId: MarkerId("1"),
+    position: LatLng(event.lat,event.lng),
+    infoWindow: InfoWindow(
+      title: "locationName",
+    ),
+  ),}));
+}
+      if(event is AddSalonEvent){
+        emit(AddSalonLoadingState());
+        ( await storeSalonUsecase. execute(
+          StoreSalonModel(event.name, salon.lat, salon.lng, salon.image!, event.desc, salon.status)
+        )).fold(
+                (failure)  {
+              emit(AddSalonErrorState(failure: failure));
+            },
+                (data)  async{
+
+              emit(AddSalonState());
+            }
+
         );
       }
     });

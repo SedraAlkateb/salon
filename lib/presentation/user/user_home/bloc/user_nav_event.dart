@@ -33,3 +33,20 @@ class ShowServiceEvent extends UserNavEvent {
   // TODO: implement props
   List<Object?> get props =>[];
 }
+class AddItemEvent extends UserNavEvent {
+  final  int id;
+  final int quantity;
+  AddItemEvent(this.id,this.quantity);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[id,quantity];
+}
+class AddAppointmentEvent extends UserNavEvent {
+  final  int id;
+  final String data;
+  final String time;
+  AddAppointmentEvent(this.id,this.data,this.time);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[id,data,time];
+}

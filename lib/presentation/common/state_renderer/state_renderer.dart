@@ -70,7 +70,6 @@ class StateRenderer extends StatelessWidget {
       return Container();
       case StateRendererType.popupSuccess:
         return _getPopupDialog(context, [
-        //  _getAnimatedImage(JsonAssets.loading1),
           _getMessage(title),
           _getMessage(message),
           _getRetryButton("Ok", context)
@@ -153,7 +152,6 @@ Widget _getPopupDialog(BuildContext context,List<Widget> children){
     );
 }
 Widget  _getDialogContent (BuildContext context,List<Widget>children){
-
   return Column(
     mainAxisSize: MainAxisSize.min,
   mainAxisAlignment: MainAxisAlignment.center,

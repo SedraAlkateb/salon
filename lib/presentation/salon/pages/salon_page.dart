@@ -68,7 +68,7 @@ final  TextEditingController nameController = TextEditingController();
         builder: (context, state) {
           ShowSalonModel? salonModel ;
           salonModel =BlocProvider.of<SalonBloc>(context).salonModel;
-          describtionController.text=salonModel==null?"":salonModel!.description;
+          describtionController.text=salonModel==null?"":salonModel.description;
           return
               ((state is ShowSalonLoadingState)||(salonModel==null))?
               fullScreenLoadingW(context)
@@ -183,7 +183,7 @@ final  TextEditingController nameController = TextEditingController();
                                     child: TextFieldWidget(
                                       controller: nameController,
                                       enable:state is ChangeNameSalonState?true:false,
-                                      hint:state is ShowSalonLoadingState?"Loading": salonModel!.name ,
+                                      hint:state is ShowSalonLoadingState?"Loading": salonModel.name ,
                                     ),
                                   ),
                                   Padding(

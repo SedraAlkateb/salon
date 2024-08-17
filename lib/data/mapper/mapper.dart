@@ -11,6 +11,87 @@ extension UserResponseMapper on TokenResponse? {
     );
   }
 }
+extension CardSalonResponseMapper on SalonCardResponse? {
+  SalonCard toDomain() {
+    return SalonCard(
+      this?.id ?? Constants.zero,
+      this?.name ?? Constants.empty,
+
+    );
+  }
+}
+extension CardResponseMapper on CardUserResponse? {
+  Card toDomain() {
+    return Card(
+      this?.id ?? Constants.zero,
+      this?.salon.toDomain(),
+    );
+  }
+}
+extension ServiceCardResponseMapper on ServiceCardResponse? {
+  ServiceCard toDomain() {
+    return ServiceCard(
+      this?.id ?? Constants.zero,
+      this?.name ?? Constants.empty,
+      this?.price ?? Constants.zero,
+    );
+  }
+}
+extension AppointmentCardResponseMapper on AppointmentCardResponse? {
+  AppointmentCard toDomain() {
+    return AppointmentCard(
+      this?.id ?? Constants.zero,
+      this?.date ?? Constants.empty,
+      this?.time ?? Constants.empty,
+    );
+  }
+}
+extension AppointmentsResponseMapper on AppointmentsResponse? {
+  Appointments toDomain() {
+    return Appointments(
+      this?.id ?? Constants.zero,
+      this?.appointment.toDomain(),
+
+      this?.service.toDomain(),
+      this?.salon.toDomain()
+    );
+  }
+}
+extension ShowAppointmentBaseResponseMapper on ShowAppointmentBaseResponse? {
+  ShowAppointment toDomain() {
+    return ShowAppointment(
+        this?.id ?? Constants.zero,
+        this?.service.toDomain(),
+        this?.appointment.toDomain(),
+        this?.salon.toDomain()
+    );
+  }
+}
+
+extension AppointmentsBaseResponseMapper on AppointmentsBaseResponse? {
+  AppointmentsBase toDomain() {
+    List<Appointments> model =(this?.appointments.map((response) => response.toDomain()) ??
+        const Iterable.empty())
+        .cast<Appointments>()
+        .toList();
+    return AppointmentsBase(
+      model,
+      this?.totalPrice ?? Constants.zero,
+    );
+  }
+}
+
+
+extension CardsResponseMapper on CardsUserResponse? {
+  List<Card> toDomain() {
+    List<Card> model =(this?.cards.map((response) => response.toDomain()) ??
+        const Iterable.empty())
+        .cast<Card>()
+        .toList();
+    return model;
+  }
+}
+
 extension AllAdminbaseResponseMapper on AllAdminBaseResponse? {
   AllAdminModel toDomain() {
     List<Admin> model =(this?.data.map((response) => response.toDomain()) ??

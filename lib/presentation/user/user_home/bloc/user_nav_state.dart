@@ -92,3 +92,43 @@ final class ShowServiceLoadingState extends UserNavState {
   @override
   List<Object?> get props =>[];
 }
+
+final class AddItemState extends UserNavState {
+ final String? message;
+  AddItemState(this.message);
+  @override
+  List<Object?> get props =>[message];
+}
+final class AddItemErrorState extends UserNavState {
+  final Failure failure;
+  AddItemErrorState({required this.failure});
+  @override
+
+  List<Object?> get props =>[failure];
+}
+final class AddItemLoadingState extends UserNavState {
+  @override
+  AddItemLoadingState();
+  @override
+  List<Object?> get props =>[];
+}
+
+final class AddAppointmentState extends UserNavState {
+  final String? message;
+  AddAppointmentState(this.message);
+  @override
+  List<Object?> get props =>[message];
+}
+final class AddAppointmentErrorState extends UserNavState {
+  final Failure failure;
+  AddAppointmentErrorState({required this.failure});
+  @override
+
+  List<Object?> get props =>[failure];
+}
+final class AddAppointmentLoadingState extends UserNavState {
+  @override
+  AddAppointmentLoadingState();
+  @override
+  List<Object?> get props =>[];
+}

@@ -1,3 +1,4 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:salon/app/di.dart';
 import 'package:salon/presentation/employee/pages/create_Employee_page.dart';
 import 'package:salon/presentation/employee/pages/employees_page.dart';
@@ -7,6 +8,7 @@ import 'package:salon/presentation/home_admin/pages/home_admin_page.dart';
 import 'package:salon/presentation/auth/pages/login_page.dart';
 import 'package:salon/presentation/auth/pages/register_page.dart';
 import 'package:salon/presentation/home_admin/pages/view_admin_page.dart';
+import 'package:salon/presentation/location/pages/add_location_page.dart';
 import 'package:salon/presentation/product/pages/create_product_page.dart';
 import 'package:salon/presentation/product/pages/products_page.dart';
 import 'package:salon/presentation/product/pages/show_product_page.dart';
@@ -18,6 +20,8 @@ import 'package:salon/presentation/salon/pages/salons_page.dart';
 import 'package:salon/presentation/service/pages/create_service_page.dart';
 import 'package:salon/presentation/service/pages/services_page.dart';
 import 'package:salon/presentation/service/pages/show_service_page.dart';
+import 'package:salon/presentation/user/appointment/pages/all_appointments_page.dart';
+import 'package:salon/presentation/user/card_user/pages/all_cards_page.dart';
 import 'package:salon/presentation/user/user_home/pages/show_service_user_page.dart';
 import 'package:salon/presentation/user/user_home/widgets/nav_bar.dart';
 class Routes {
@@ -47,6 +51,9 @@ class Routes {
   static const String employee = "/employee";
   static const String userNav = "/userNav";
   static const String serviceUser = "/serviceUser";
+  static const String cards = "/cards";
+  static const String appointments = "/appointments";
+  static const String addLocation = "/addLocation";
 
 }
 class RouteGenerator {
@@ -80,7 +87,7 @@ class RouteGenerator {
       case Routes.serviceUser:
         return MaterialPageRoute(builder: (_) =>    const ShowServiceUserPage());
       case Routes.createService:
-    //    initEmployeesModule();
+
         return MaterialPageRoute(builder: (_) =>    CreateServicePage());
       case Routes.createEmployee:
         return MaterialPageRoute(builder: (_) =>    CreateEmployeePage());
@@ -99,7 +106,19 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>    const ShowEmployeePage());
       case Routes.userNav:
         initUserNavModule();
+        initCardModule();
         return MaterialPageRoute(builder: (_) =>    NavPage());
+      case Routes.cards:
+        initCardModule();
+        return MaterialPageRoute(builder: (_) =>    const AllCardsPage());
+      case Routes.appointments:
+        initAppointmentModule();
+        return MaterialPageRoute(builder: (_) =>    const AllAppointmentsPage());
+      case Routes.addLocation:
+        return MaterialPageRoute(builder: (_) =>    const AddLocationPage());
+
+
+
       default:
         return unDefinedRoute();
     }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class User {
   int id;
   String first_name;
@@ -8,6 +10,17 @@ class User {
 
   User(this.id, this.first_name, this.last_name, this.email,
       this.whatsapp_number, this.image);
+}
+class SalonCard{
+  int id;
+  String name;
+  SalonCard(this.id, this.name);
+}
+class Card{
+  int id;
+  SalonCard? salonCard;
+
+  Card(this.id,this.salonCard, );
 }
 
 class ViewAdmin {
@@ -49,7 +62,7 @@ class StoreSalonModel{
   String name;
   String latitude;
   String longitude;
-  String logo_image;
+  File logo_image;
   String description;
   String status;
 
@@ -153,6 +166,40 @@ class UpdateUser {
 class TokenUser {
   String access_token;
   TokenUser(this.access_token);
+}
+class AppointmentCard {
+  int id;
+  String date;
+  String time;
+  AppointmentCard(this.id, this.date, this.time);
+}
+class ServiceCard {
+  int id;
+  String name;
+  int price;
+
+  ServiceCard(this.id, this.name, this.price);
+}
+class Appointments{
+  int id;
+  AppointmentCard? appointment;
+  ServiceCard? service;
+  SalonCard? salon;
+  Appointments(this.id, this.appointment, this.service, this.salon);
+}
+class AppointmentsBase {
+  List<Appointments>? appointments;
+  int  totalPrice;
+  AppointmentsBase(this.appointments, this.totalPrice);
+}
+class ShowAppointment  {
+  int? id;
+  ServiceCard ? service;
+  AppointmentCard?appointment;
+  SalonCard?salon;
+
+  ShowAppointment(this.id, this.service, this.appointment,
+      this.salon);
 }
 const List<String> status=["active","inactive"];
 const List<String> typeAuth=["Super Admin","Admin","Uesr"];

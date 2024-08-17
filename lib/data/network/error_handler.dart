@@ -31,7 +31,7 @@ Failure _handleError(DioError error){
         final responseBody = error.response?.data;
         String message="";
         if (responseBody != null) {
-          message = responseBody['message']??responseBody['error'];
+          message = responseBody['message']??responseBody['error']??responseBody;
 
           print('Error Message: $message');
           return  Failure(error.response?.statusCode ?? 404, message);

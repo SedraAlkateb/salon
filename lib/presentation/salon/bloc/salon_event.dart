@@ -18,6 +18,15 @@ class DeleteSalonEvent extends SalonEvent {
   // TODO: implement props
   List<Object?> get props =>[];
 }
+class AddLocationSalonEvent extends SalonEvent {
+  final double lat;
+  final double lng;
+  AddLocationSalonEvent(this.lat,this.lng);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[lat,lng];
+}
+
 class ShowSalonEvent extends SalonEvent {
 final  int id;
 final  double lat;
@@ -81,5 +90,13 @@ class UpdateSalonEvent extends SalonEvent {
   // TODO: implement props
   List<Object?> get props =>[];
 
+
+}
+class AddSalonEvent  extends SalonEvent{
+  String desc;
+  String name;
+  AddSalonEvent({required this.desc,required this.name});
+  @override
+  List<Object?> get props => [];
 
 }

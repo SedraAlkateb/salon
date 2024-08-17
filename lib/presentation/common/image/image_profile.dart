@@ -45,14 +45,14 @@ final  String? image;
                           shape: BoxShape.circle,
                           color: Colors.grey[100],
                           image: DecorationImage(image:
-                          FileImage(File(updateImage??"")??File("")))
+                          FileImage(File(updateImage??"")))
                       ),
                     )
                     ,
                   )
                       : InkWell(
                     onTap: ()  async{
-                      File? image=await y.selectImage(context);
+                 //     File? image=await y.selectImage(context);
              //         Provider.of<LoginViewModel>(context,listen: false).updateImage(image);
                     },
                     child: Container(

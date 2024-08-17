@@ -7,7 +7,9 @@ part of 'responses.dart';
 // **************************************************************************
 
 MessageResponse _$MessageResponseFromJson(Map<String, dynamic> json) =>
-    MessageResponse()
+    MessageResponse(
+      json['message'] as String?,
+    )
       ..st = (json['st'] as num?)?.toInt()
       ..massage = json['massage'] as String?;
 
@@ -15,6 +17,7 @@ Map<String, dynamic> _$MessageResponseToJson(MessageResponse instance) =>
     <String, dynamic>{
       'st': instance.st,
       'massage': instance.massage,
+      'message': instance.message,
     };
 
 TokenResponse _$TokenResponseFromJson(Map<String, dynamic> json) =>
@@ -425,4 +428,153 @@ Map<String, dynamic> _$ShowEmployeeBaseResponseToJson(
       'st': instance.st,
       'massage': instance.massage,
       'data': instance.data,
+    };
+
+SalonCardResponse _$SalonCardResponseFromJson(Map<String, dynamic> json) =>
+    SalonCardResponse(
+      (json['id'] as num).toInt(),
+      json['name'] as String,
+    );
+
+Map<String, dynamic> _$SalonCardResponseToJson(SalonCardResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };
+
+CardUserResponse _$CardUserResponseFromJson(Map<String, dynamic> json) =>
+    CardUserResponse(
+      (json['id'] as num?)?.toInt(),
+      json['salon'] == null
+          ? null
+          : SalonCardResponse.fromJson(json['salon'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$CardUserResponseToJson(CardUserResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'salon': instance.salon,
+    };
+
+CardsUserResponse _$CardsUserResponseFromJson(Map<String, dynamic> json) =>
+    CardsUserResponse(
+      (json['cards'] as List<dynamic>)
+          .map((e) => CardUserResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..st = (json['st'] as num?)?.toInt()
+      ..massage = json['massage'] as String?;
+
+Map<String, dynamic> _$CardsUserResponseToJson(CardsUserResponse instance) =>
+    <String, dynamic>{
+      'st': instance.st,
+      'massage': instance.massage,
+      'cards': instance.cards,
+    };
+
+ServiceCardResponse _$ServiceCardResponseFromJson(Map<String, dynamic> json) =>
+    ServiceCardResponse(
+      (json['id'] as num?)?.toInt(),
+      json['name'] as String?,
+      (json['price'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$ServiceCardResponseToJson(
+        ServiceCardResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'price': instance.price,
+    };
+
+AppointmentCardResponse _$AppointmentCardResponseFromJson(
+        Map<String, dynamic> json) =>
+    AppointmentCardResponse(
+      (json['id'] as num?)?.toInt(),
+      json['date'] as String?,
+      json['time'] as String?,
+    );
+
+Map<String, dynamic> _$AppointmentCardResponseToJson(
+        AppointmentCardResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'date': instance.date,
+      'time': instance.time,
+    };
+
+AppointmentsResponse _$AppointmentsResponseFromJson(
+        Map<String, dynamic> json) =>
+    AppointmentsResponse(
+      (json['id'] as num?)?.toInt(),
+      json['appointment'] == null
+          ? null
+          : AppointmentCardResponse.fromJson(
+              json['appointment'] as Map<String, dynamic>),
+      json['service'] == null
+          ? null
+          : ServiceCardResponse.fromJson(
+              json['service'] as Map<String, dynamic>),
+      json['salon'] == null
+          ? null
+          : SalonCardResponse.fromJson(json['salon'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$AppointmentsResponseToJson(
+        AppointmentsResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'appointment': instance.appointment,
+      'service': instance.service,
+      'salon': instance.salon,
+    };
+
+AppointmentsBaseResponse _$AppointmentsBaseResponseFromJson(
+        Map<String, dynamic> json) =>
+    AppointmentsBaseResponse(
+      (json['appointments'] as List<dynamic>)
+          .map((e) => AppointmentsResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['totalPrice'] as num?)?.toInt(),
+    )
+      ..st = (json['st'] as num?)?.toInt()
+      ..massage = json['massage'] as String?;
+
+Map<String, dynamic> _$AppointmentsBaseResponseToJson(
+        AppointmentsBaseResponse instance) =>
+    <String, dynamic>{
+      'st': instance.st,
+      'massage': instance.massage,
+      'appointments': instance.appointments,
+      'totalPrice': instance.totalPrice,
+    };
+
+ShowAppointmentBaseResponse _$ShowAppointmentBaseResponseFromJson(
+        Map<String, dynamic> json) =>
+    ShowAppointmentBaseResponse(
+      (json['id'] as num?)?.toInt(),
+      json['service'] == null
+          ? null
+          : ServiceCardResponse.fromJson(
+              json['service'] as Map<String, dynamic>),
+      json['appointment'] == null
+          ? null
+          : AppointmentCardResponse.fromJson(
+              json['appointment'] as Map<String, dynamic>),
+      json['salon'] == null
+          ? null
+          : SalonCardResponse.fromJson(json['salon'] as Map<String, dynamic>),
+    )
+      ..st = (json['st'] as num?)?.toInt()
+      ..massage = json['massage'] as String?;
+
+Map<String, dynamic> _$ShowAppointmentBaseResponseToJson(
+        ShowAppointmentBaseResponse instance) =>
+    <String, dynamic>{
+      'st': instance.st,
+      'massage': instance.massage,
+      'id': instance.id,
+      'service': instance.service,
+      'appointment': instance.appointment,
+      'salon': instance.salon,
     };

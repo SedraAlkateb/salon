@@ -13,7 +13,7 @@ class _AppServiceClient implements AppServiceClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://192.168.1.11:8000/api';
+    baseUrl ??= 'http://192.168.137.138:8000/api';
   }
 
   final Dio _dio;
@@ -332,7 +332,7 @@ class _AppServiceClient implements AppServiceClient {
   Future<MessageResponse> storeSalon(
     String name,
     String description,
-    String logo_image,
+    File logo_image,
     String status,
     String latitude,
     String longitude,
@@ -349,9 +349,12 @@ class _AppServiceClient implements AppServiceClient {
       'description',
       description,
     ));
-    _data.fields.add(MapEntry(
+    _data.files.add(MapEntry(
       'logo_image',
-      logo_image,
+      MultipartFile.fromFileSync(
+        logo_image.path,
+        filename: logo_image.path.split(Platform.pathSeparator).last,
+      ),
     ));
     _data.fields.add(MapEntry(
       'status',
@@ -641,6 +644,70 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
+  Future<MessageResponse> addService(
+    String name,
+    String? description,
+    File image,
+    String status,
+    int price,
+    int employee_id,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'name',
+      name,
+    ));
+    if (description != null) {
+      _data.fields.add(MapEntry(
+        'description',
+        description,
+      ));
+    }
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    _data.fields.add(MapEntry(
+      'status',
+      status,
+    ));
+    _data.fields.add(MapEntry(
+      'price',
+      price.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'employee_id',
+      employee_id.toString(),
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/service/store',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = MessageResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
   Future<ShowProductBaseResponse> showProduct(int id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -799,6 +866,244 @@ class _AppServiceClient implements AppServiceClient {
               baseUrl,
             ))));
     final _value = MessageResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<MessageResponse> addCard(
+    int id,
+    int quantity,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'quantity',
+      quantity.toString(),
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/addItem/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = MessageResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<MessageResponse> deleteCardItem(
+    int idCard,
+    int idProduct,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/deleteCartItem/${idCard}/${idProduct}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = MessageResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<MessageResponse> deleteCard(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/deleteCart/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = MessageResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<CardsUserResponse> allCarts() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<CardsUserResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/allCarts',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = CardsUserResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<MessageResponse> addAppointment(
+    int id,
+    String date,
+    String time,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'date',
+      date,
+    ));
+    _data.fields.add(MapEntry(
+      'time',
+      time,
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/addAppointment/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = MessageResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<MessageResponse> cancelAppointment(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/cancelAppointment/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = MessageResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<AppointmentsBaseResponse> appointments() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AppointmentsBaseResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/appointments',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = AppointmentsBaseResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<ShowAppointmentBaseResponse> showAppointment(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ShowAppointmentBaseResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/showAppointment/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ShowAppointmentBaseResponse.fromJson(_result.data!);
     return _value;
   }
 

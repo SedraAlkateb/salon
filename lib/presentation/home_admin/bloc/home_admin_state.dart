@@ -142,3 +142,22 @@ final class UpdateAdminLoadingState extends HomeAdminState {
   @override
   List<Object?> get props =>[];
 }
+
+final class AddAdminState extends HomeAdminState {
+  AddAdminState();
+  @override
+  List<Object?> get props =>[];
+}
+final class AddAdminErrorState extends HomeAdminState {
+  final Failure failure;
+  AddAdminErrorState({required this.failure});
+  @override
+
+  List<Object?> get props =>[failure];
+}
+final class AddAdminLoadingState extends HomeAdminState {
+  @override
+  AddAdminLoadingState();
+  @override
+  List<Object?> get props =>[];
+}

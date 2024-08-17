@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salon/app/constants.dart';
+import 'package:salon/app/di.dart';
 import 'package:salon/domain/models/models.dart';
 import 'package:salon/presentation/drawer/pages/drawer_admin.dart';
 import 'package:salon/presentation/drawer/pages/drawer_admin_1.dart';
@@ -134,8 +135,9 @@ class _ServicesPageState extends State<ServicesPage> {
                 padding: const EdgeInsets.all(AppPadding.p28),
                 child: IconButton(
                   onPressed: () {
-                    BlocProvider.of<EmployeeBloc>(context).add(AllEmployee());
+                    initEmployeesModule();
                     Navigator.pushNamed(context, Routes.createService);
+                    BlocProvider.of<EmployeeBloc>(context).add(AllEmployee());
                   },
                   icon: Container(
                       decoration:

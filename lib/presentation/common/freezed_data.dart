@@ -103,7 +103,9 @@ class CreateSalonObject with _$CreateSalonObject {
       String name,
       String desc,
       File ?image,
-      String status
+      String status,
+      String lat,
+      String lng
       )
   =_CreateSalonObject;
 }
@@ -111,6 +113,7 @@ class CreateSalonObject with _$CreateSalonObject {
 class CreateAdminObject with _$CreateAdminObject {
   factory CreateAdminObject(
       String? name,
+      String? password,
       int? id,
       )
   =_CreateAdminObject;

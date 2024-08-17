@@ -1735,6 +1735,8 @@ mixin _$CreateSalonObject {
   String get desc => throw _privateConstructorUsedError;
   File? get image => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
+  String get lat => throw _privateConstructorUsedError;
+  String get lng => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreateSalonObjectCopyWith<CreateSalonObject> get copyWith =>
@@ -1747,7 +1749,13 @@ abstract class $CreateSalonObjectCopyWith<$Res> {
           CreateSalonObject value, $Res Function(CreateSalonObject) then) =
       _$CreateSalonObjectCopyWithImpl<$Res, CreateSalonObject>;
   @useResult
-  $Res call({String name, String desc, File? image, String status});
+  $Res call(
+      {String name,
+      String desc,
+      File? image,
+      String status,
+      String lat,
+      String lng});
 }
 
 /// @nodoc
@@ -1767,6 +1775,8 @@ class _$CreateSalonObjectCopyWithImpl<$Res, $Val extends CreateSalonObject>
     Object? desc = null,
     Object? image = freezed,
     Object? status = null,
+    Object? lat = null,
+    Object? lng = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -1785,6 +1795,14 @@ class _$CreateSalonObjectCopyWithImpl<$Res, $Val extends CreateSalonObject>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
+      lat: null == lat
+          ? _value.lat
+          : lat // ignore: cast_nullable_to_non_nullable
+              as String,
+      lng: null == lng
+          ? _value.lng
+          : lng // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -1797,7 +1815,13 @@ abstract class _$$CreateSalonObjectImplCopyWith<$Res>
       __$$CreateSalonObjectImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String desc, File? image, String status});
+  $Res call(
+      {String name,
+      String desc,
+      File? image,
+      String status,
+      String lat,
+      String lng});
 }
 
 /// @nodoc
@@ -1815,6 +1839,8 @@ class __$$CreateSalonObjectImplCopyWithImpl<$Res>
     Object? desc = null,
     Object? image = freezed,
     Object? status = null,
+    Object? lat = null,
+    Object? lng = null,
   }) {
     return _then(_$CreateSalonObjectImpl(
       null == name
@@ -1833,6 +1859,14 @@ class __$$CreateSalonObjectImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
+      null == lat
+          ? _value.lat
+          : lat // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == lng
+          ? _value.lng
+          : lng // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -1840,7 +1874,8 @@ class __$$CreateSalonObjectImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CreateSalonObjectImpl implements _CreateSalonObject {
-  _$CreateSalonObjectImpl(this.name, this.desc, this.image, this.status);
+  _$CreateSalonObjectImpl(
+      this.name, this.desc, this.image, this.status, this.lat, this.lng);
 
   @override
   final String name;
@@ -1850,10 +1885,14 @@ class _$CreateSalonObjectImpl implements _CreateSalonObject {
   final File? image;
   @override
   final String status;
+  @override
+  final String lat;
+  @override
+  final String lng;
 
   @override
   String toString() {
-    return 'CreateSalonObject(name: $name, desc: $desc, image: $image, status: $status)';
+    return 'CreateSalonObject(name: $name, desc: $desc, image: $image, status: $status, lat: $lat, lng: $lng)';
   }
 
   @override
@@ -1864,11 +1903,14 @@ class _$CreateSalonObjectImpl implements _CreateSalonObject {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.desc, desc) || other.desc == desc) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.lat, lat) || other.lat == lat) &&
+            (identical(other.lng, lng) || other.lng == lng));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, desc, image, status);
+  int get hashCode =>
+      Object.hash(runtimeType, name, desc, image, status, lat, lng);
 
   @JsonKey(ignore: true)
   @override
@@ -1879,8 +1921,13 @@ class _$CreateSalonObjectImpl implements _CreateSalonObject {
 }
 
 abstract class _CreateSalonObject implements CreateSalonObject {
-  factory _CreateSalonObject(final String name, final String desc,
-      final File? image, final String status) = _$CreateSalonObjectImpl;
+  factory _CreateSalonObject(
+      final String name,
+      final String desc,
+      final File? image,
+      final String status,
+      final String lat,
+      final String lng) = _$CreateSalonObjectImpl;
 
   @override
   String get name;
@@ -1891,6 +1938,10 @@ abstract class _CreateSalonObject implements CreateSalonObject {
   @override
   String get status;
   @override
+  String get lat;
+  @override
+  String get lng;
+  @override
   @JsonKey(ignore: true)
   _$$CreateSalonObjectImplCopyWith<_$CreateSalonObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1899,6 +1950,7 @@ abstract class _CreateSalonObject implements CreateSalonObject {
 /// @nodoc
 mixin _$CreateAdminObject {
   String? get name => throw _privateConstructorUsedError;
+  String? get password => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -1912,7 +1964,7 @@ abstract class $CreateAdminObjectCopyWith<$Res> {
           CreateAdminObject value, $Res Function(CreateAdminObject) then) =
       _$CreateAdminObjectCopyWithImpl<$Res, CreateAdminObject>;
   @useResult
-  $Res call({String? name, int? id});
+  $Res call({String? name, String? password, int? id});
 }
 
 /// @nodoc
@@ -1929,12 +1981,17 @@ class _$CreateAdminObjectCopyWithImpl<$Res, $Val extends CreateAdminObject>
   @override
   $Res call({
     Object? name = freezed,
+    Object? password = freezed,
     Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      password: freezed == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
               as String?,
       id: freezed == id
           ? _value.id
@@ -1952,7 +2009,7 @@ abstract class _$$CreateAdminObjectImplCopyWith<$Res>
       __$$CreateAdminObjectImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? name, int? id});
+  $Res call({String? name, String? password, int? id});
 }
 
 /// @nodoc
@@ -1967,12 +2024,17 @@ class __$$CreateAdminObjectImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
+    Object? password = freezed,
     Object? id = freezed,
   }) {
     return _then(_$CreateAdminObjectImpl(
       freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      freezed == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
               as String?,
       freezed == id
           ? _value.id
@@ -1985,16 +2047,18 @@ class __$$CreateAdminObjectImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CreateAdminObjectImpl implements _CreateAdminObject {
-  _$CreateAdminObjectImpl(this.name, this.id);
+  _$CreateAdminObjectImpl(this.name, this.password, this.id);
 
   @override
   final String? name;
+  @override
+  final String? password;
   @override
   final int? id;
 
   @override
   String toString() {
-    return 'CreateAdminObject(name: $name, id: $id)';
+    return 'CreateAdminObject(name: $name, password: $password, id: $id)';
   }
 
   @override
@@ -2003,11 +2067,13 @@ class _$CreateAdminObjectImpl implements _CreateAdminObject {
         (other.runtimeType == runtimeType &&
             other is _$CreateAdminObjectImpl &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, id);
+  int get hashCode => Object.hash(runtimeType, name, password, id);
 
   @JsonKey(ignore: true)
   @override
@@ -2018,11 +2084,14 @@ class _$CreateAdminObjectImpl implements _CreateAdminObject {
 }
 
 abstract class _CreateAdminObject implements CreateAdminObject {
-  factory _CreateAdminObject(final String? name, final int? id) =
+  factory _CreateAdminObject(
+          final String? name, final String? password, final int? id) =
       _$CreateAdminObjectImpl;
 
   @override
   String? get name;
+  @override
+  String? get password;
   @override
   int? get id;
   @override

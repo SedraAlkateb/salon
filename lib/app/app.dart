@@ -11,6 +11,8 @@ import 'package:salon/presentation/resources/them_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salon/presentation/salon/bloc/salon_bloc.dart';
 import 'package:salon/presentation/service/bloc/service_bloc.dart';
+import 'package:salon/presentation/user/appointment/bloc/appointment_bloc.dart';
+import 'package:salon/presentation/user/card_user/bloc/card_bloc.dart';
 import 'package:salon/presentation/user/user_home/bloc/user_nav_bloc.dart';
 
 class MyApp extends StatefulWidget {
@@ -46,6 +48,12 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
             create: (_) => instance<UserNavBloc>()
+        ),
+        BlocProvider(
+            create: (_) => instance<CardBloc>()
+        ),
+        BlocProvider(
+            create: (_) => instance<AppointmentBloc>()
         ),
     ],
     child: MaterialApp(

@@ -30,5 +30,17 @@ abstract class Repository{
  Future<Either<Failure,ShowEmployee>> showEmployee(int id,);
  Future<Either<Failure,List<Employees>>>  employees();
  Future<Either<Failure,MessageResponse>> deleteEmployee(int id);
+ Future<Either<Failure,MessageResponse>> addCard(int id, int quantity);
+ Future<Either<Failure,MessageResponse>> deleteCardItem(int idCard, int idProduct);
+ Future<Either<Failure,MessageResponse>> deleteCard(int id);
+ Future<Either<Failure,List<Card>>> allCard();
+
+ Future<Either<Failure,MessageResponse>> addAppointment( AppointmentReq appointmenReq);
+
+ Future<Either<Failure,MessageResponse>> cancelAppointment(int id);
+
+ Future<Either<Failure,AppointmentsBase>> appointments();
+ Future<Either<Failure,ShowAppointment>> showAppointment(int id);
+ Future<Either<Failure,MessageResponse>> addService(AddServiceReq addServiceReq);
 
 }

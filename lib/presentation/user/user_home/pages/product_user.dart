@@ -19,7 +19,7 @@ class ProductUser extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorManager.primary,
 
-      body:  BlocConsumer<UserNavBloc, UserNavState>(
+      body: BlocConsumer<UserNavBloc, UserNavState>(
         listener: (context, state) {
           if (state is ProductsErrorState) {
             error(context, state.failure.massage, state.failure.code);
@@ -33,7 +33,9 @@ class ProductUser extends StatelessWidget {
         },
         builder: (context, state) {
           List<Product> products =
-              BlocProvider.of<UserNavBloc>(context).products;
+              BlocProvider
+                  .of<UserNavBloc>(context)
+                  .products;
           return SingleChildScrollView(
 
             child: Column(
@@ -43,19 +45,32 @@ class ProductUser extends StatelessWidget {
 
                 SearchField(searchController: _searchController),
 
-                ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  separatorBuilder: (context, index) =>
-                  const SizedBox(
-                    width: double.infinity,
-                    height: AppSize.s20,
-                    // color: Color,
+                BlocListener<UserNavBloc, UserNavState>(
+                  listener: (context, state) {
+                    if(state is AddItemLoadingState){
+                      loading(context);
+                    }
+                    if(state is AddItemErrorState){
+                      error(context, state.failure.massage, state.failure.code);
+                    }
+                    if(state is AddItemState){
+                      successWithMessage(context,state.message??"Success");
+                    }
+                  },
+                  child: ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    separatorBuilder: (context, index) =>
+                    const SizedBox(
+                      width: double.infinity,
+                      height: AppSize.s20,
+                      // color: Color,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) =>
+                        ProductWid(product: products[index], index: index),
                   ),
-                  itemCount: products.length,
-                  itemBuilder: (context, index) =>
-                      ProductWid(product: products[index], index: index),
                 ),
               ],
             ),

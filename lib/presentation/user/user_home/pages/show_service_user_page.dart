@@ -210,7 +210,7 @@ class ShowServiceUserPage extends StatelessWidget {
                                     const EdgeInsets.symmetric(horizontal: AppPadding.p8),
                                     child:  TextRach(
                                       s1: "name : ",
-                                      s2: showServiceUser!.salons![index].name,
+                                      s2: showServiceUser.salons![index].name,
                                     ),
                                   ),
                                   Padding(
@@ -218,7 +218,7 @@ class ShowServiceUserPage extends StatelessWidget {
                                     const EdgeInsets.symmetric(horizontal: AppPadding.p8),
                                     child:  TextRach(
                                       s1: "description : ",
-                                      s2: showServiceUser!.salons![index].description,
+                                      s2: showServiceUser.salons![index].description,
                                     ),
                                   ),
                                 ],
@@ -229,7 +229,7 @@ class ShowServiceUserPage extends StatelessWidget {
 
                         TextButton(onPressed: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context){return
-                            LocationPage(center: LatLng(double.parse(showServiceUser!.salons![index].latitude), double.parse(showServiceUser!.salons![index].longitude)));
+                            LocationPage(center: LatLng(double.parse(showServiceUser!.salons![index].latitude), double.parse(showServiceUser.salons![index].longitude)));
                           },));
                         }, child: Container(
                           color: ColorManager.myGrays,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salon/domain/models/models.dart';
 import 'package:salon/presentation/home_admin/bloc/home_admin_bloc.dart';
 import 'package:salon/presentation/resources/color_manager.dart';
+import 'package:salon/presentation/resources/routes_manager.dart';
 import 'package:salon/presentation/resources/values_manager.dart';
 import 'package:salon/presentation/salon/bloc/salon_bloc.dart';
 import 'package:salon/presentation/uniti/app_bar.dart';
@@ -68,8 +69,8 @@ class CreateAdmin extends StatelessWidget {
                           items: BlocProvider.of<SalonBloc>(context).salons,
                           prefixIcon: null,
                           onChanged: (value ){
-                        //    SalonModel admin=value;
-                        //    BlocProvider.of<HomeAdminBloc>(context).add(ChangeSalonEvent(admin.name,admin.id));
+                            SalonModel admin=value;
+                            BlocProvider.of<HomeAdminBloc>(context).add(AddSalonToAdminEvent(admin.id));
                             },
                           validator: (value){
                           }
@@ -79,15 +80,15 @@ class CreateAdmin extends StatelessWidget {
               SizedBox(height: 50,),
               BlocListener<HomeAdminBloc, HomeAdminState>(
                 listener: (context, state) {
-                  // if(state is LogInLoadingState){
-                  //   loading(context);
-                  // }
-                  // if(state is LogInErrorState){
-                  //   error(context,state.failure.massage,state.failure.code);
-                  // }
-                  // if(state is LogInState){
-                  //   Navigator.of(context).pushNamed(Routes.homeAdmin);
-                  // }
+                  if(state is AddAdminLoadingState){
+                    loading(context);
+                  }
+                  if(state is AddAdminErrorState){
+                    error(context,state.failure.massage,state.failure.code);
+                  }
+                  if(state is AddAdminState){
+                    Navigator.of(context).pushNamed(Routes.homeAdmin);
+                  }
                 },
                 child: ElevatedButton(
                   style: const ButtonStyle(),
@@ -111,10 +112,10 @@ class CreateAdmin extends StatelessWidget {
   }
   void _submit(BuildContext context){
     if (_forKey.currentState!.validate()) {
- //     BlocProvider.of<HomeAdminBloc>(context).add((
-  //      email: _emailController.text,
-   //     password: _passwordController.text,
-   //   ));
+      BlocProvider.of<HomeAdminBloc>(context).add(AddAdminEvent(
+        _emailController.text,
+        _passwordController.text
+      ));
 
 
     }

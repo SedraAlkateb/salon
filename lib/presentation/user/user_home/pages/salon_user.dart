@@ -96,7 +96,7 @@ class SalonUser extends StatelessWidget {
                                 onTap: (()
                                 {
                                   Navigator.push(context, MaterialPageRoute(builder: (context){return
-                                    LocationPage(center: LatLng(double.parse(salons![index].latitude), double.parse(salons![index].longitude)));
+                                    LocationPage(center: LatLng(double.parse(salons[index].latitude), double.parse(salons[index].longitude)));
                                   },));
                                 }),
                                 child: Padding(

@@ -80,3 +80,34 @@ final class UpdateServiceLoadingState extends ServiceState {
   @override
   List<Object?> get props =>[];
 }
+class AddImageToServiceState extends ServiceState {
+  final  File image;
+  AddImageToServiceState(this.image,);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[image];
+}
+final class ChangeStatusServiceState extends ServiceState{
+  final String status;
+  ChangeStatusServiceState({required this.status});
+  @override
+  List<Object?> get props => [status];
+}
+
+
+final class AddServiceState extends ServiceState {
+  AddServiceState();
+  @override
+  List<Object?> get props =>[];
+}
+final class AddServiceErrorState extends ServiceState {
+  final Failure failure;
+  AddServiceErrorState({required this.failure});
+  @override
+  List<Object?> get props =>[failure];
+}
+final class AddServiceLoadingState extends ServiceState {
+  AddServiceLoadingState();
+  @override
+  List<Object?> get props =>[];
+}

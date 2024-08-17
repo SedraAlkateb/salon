@@ -2,14 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salon/domain/models/models.dart';
 import 'package:salon/presentation/employee/bloc/employee_bloc.dart';
 import 'package:salon/presentation/resources/assets_manager.dart';
 import 'package:salon/presentation/resources/color_manager.dart';
 import 'package:salon/presentation/resources/values_manager.dart';
 import 'package:salon/presentation/service/bloc/service_bloc.dart';
 import 'package:salon/presentation/uniti/app_bar.dart';
-import 'package:salon/presentation/uniti/box_text_field.dart';
 import 'package:salon/presentation/uniti/image/image.dart';
 import 'package:salon/presentation/uniti/text_field.dart';
 class CreateEmployeePage extends StatelessWidget {

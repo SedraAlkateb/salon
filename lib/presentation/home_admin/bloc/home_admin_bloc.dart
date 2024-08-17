@@ -21,12 +21,15 @@ class HomeAdminBloc extends Bloc<HomeAdminEvent, HomeAdminState> {
   ViewAdminUsecase viewAdminUsecase;
   StoreAdminUsecase storeAdminUsecase;
   UpdateAdminUsecase updateAdminUsecase;
-  CreateAdminObject createAdminObject=CreateAdminObject(null, null);
+  CreateAdminObject createAdminObject=CreateAdminObject(null, null,null);
   List<Admin> allAdmin=[];
   ViewAdmin? viewAdmin;
   bool isBuild=false;
   setName(String name) {
     createAdminObject= createAdminObject.copyWith(name: name);
+  }
+  setPassword(String password) {
+    createAdminObject= createAdminObject.copyWith(password: password);
   }
   setSalon(int salonId) {
     createAdminObject= createAdminObject.copyWith(id: salonId);
@@ -85,13 +88,18 @@ class HomeAdminBloc extends Bloc<HomeAdminEvent, HomeAdminState> {
                   viewAdmin=data;
 
               emit(ViewAdminState(viewAdmin: data));
-                  createAdminObject=CreateAdminObject(null, null);
+                  createAdminObject=CreateAdminObject(null, null,null);
             }
 
         );
       }
+      if(event is AddSalonToAdminEvent){
+        print(event.id);
+        print("id");
+        setSalon(event.id);
+      }
       if(event is ChangeSalonEvent){
-        viewAdmin!.salon=event.name;
+          viewAdmin!.salon=event.name;
         setSalon(event.id);
         emit(ChangeSalonState(name: event.name));
       }
@@ -116,6 +124,23 @@ class HomeAdminBloc extends Bloc<HomeAdminEvent, HomeAdminState> {
                 (data)  async{
 
               emit(UpdateAdminState());
+            }
+
+        );
+      }
+      if(event is AddAdminEvent){
+        emit(AddAdminLoadingState());
+        ( await storeAdminUsecase.execute(
+            StoreAdminRequest( name: event.name,
+                password: event.password, salonId:createAdminObject.id!)
+        )).fold(
+                (failure)  {
+              isBuild=false;
+              emit(AddAdminErrorState(failure: failure));
+            },
+                (data)  async{
+
+              emit(AddAdminState());
             }
 
         );

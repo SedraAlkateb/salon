@@ -46,6 +46,23 @@ class UpdateAdminEvent extends HomeAdminEvent {
 
 
 }
+class AddAdminEvent extends HomeAdminEvent {
+  String name;
+  String password;
+  AddAdminEvent(this.name,this.password);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[];
+
+
+}
+class AddSalonToAdminEvent  extends HomeAdminEvent{
+  final int id;
+  AddSalonToAdminEvent(this.id);
+  @override
+  List<Object?> get props => [id];
+
+}
 
 
 class ChangeSalonEvent  extends HomeAdminEvent{

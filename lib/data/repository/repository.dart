@@ -530,4 +530,215 @@ class RepositoryImp implements Repository {
           .failure);
     }
   }
+
+  @override
+  Future<Either<Failure, MessageResponse>> addCard(int id, int quantity)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.addCard(id,quantity);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageResponse>> deleteCard(int id)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.deleteCard(id);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageResponse>> deleteCardItem(int idCard, int idProduct)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.deleteCardItem(idCard,idProduct);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure,   List<Card>>> allCard()   async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.allCarts();
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageResponse>> addAppointment(AppointmentReq appointmenReq)  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.addAppointment(appointmenReq);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, AppointmentsBase>> appointments()  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.appointments();
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageResponse>> cancelAppointment(int id)  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.cancelAppointment(id);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+  @override
+  Future<Either<Failure, ShowAppointment>> showAppointment(int id)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.showAppointment(id);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageResponse>> addService(AddServiceReq addServiceReq)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.addService(addServiceReq);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
 }

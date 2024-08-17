@@ -52,7 +52,7 @@ abstract class AppServiceClient {
   Future<MessageResponse> storeSalon(
       @Part(name: "name") String name,
       @Part(name: "description") String description,
-      @Part(name: "logo_image") String logo_image,
+      @Part(name: "logo_image") File logo_image,
       @Part(name: "status") String status,
       @Part(name: "latitude") String latitude,
       @Part(name: "longitude") String longitude,
@@ -96,6 +96,15 @@ abstract class AppServiceClient {
   Future<MessageResponse> deleteService(
       @Path("id") int id
       );
+  @DELETE("/service/store")
+  Future<MessageResponse> addService(
+      @Part(name: "name") String name,
+      @Part(name: "description") String ?description,
+      @Part(name: "image") File image,
+      @Part(name: "status") String status,
+      @Part(name: "price") int price,
+      @Part(name: "employee_id") int employee_id
+      );
   @GET("/product/show/{id}")
   Future<ShowProductBaseResponse> showProduct(
       @Path("id") int id,
@@ -119,5 +128,36 @@ abstract class AppServiceClient {
       @Path("id") int id
       );
 
+  @POST("/addItem/{id}")
+  Future<MessageResponse> addCard(
+      @Path("id") int id,
+      @Part(name: "quantity") int quantity,);
+  @DELETE("/deleteCartItem/{id_card}/{id_product}")
+  Future<MessageResponse> deleteCardItem(
+      @Path("id_card") int idCard,
+      @Path("id_product") int idProduct,
+      );
+  @DELETE("/deleteCart/{id}")
+  Future<MessageResponse> deleteCard(
+      @Path("id") int id,
+      );
+  @GET("/allCarts")
+  Future<CardsUserResponse> allCarts();
+  @POST("/addAppointment/{id}")
+  Future<MessageResponse> addAppointment(
+      @Path("id") int id,
+      @Part(name: "date") String date,
+      @Part(name: "time") String time,
+      );
+  @DELETE("/cancelAppointment/{id}")
+  Future<MessageResponse> cancelAppointment(
+      @Path("id") int id,
+      );
+  @GET("/appointments")
+  Future<AppointmentsBaseResponse> appointments();
+  @GET("/showAppointment/{id}")
+  Future<ShowAppointmentBaseResponse> showAppointment(
+      @Path("id") int id,
+      );
 
 }

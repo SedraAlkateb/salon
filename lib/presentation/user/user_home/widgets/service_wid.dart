@@ -4,13 +4,18 @@ import 'package:salon/domain/models/models.dart';
 import 'package:salon/presentation/resources/color_manager.dart';
 import 'package:salon/presentation/resources/routes_manager.dart';
 import 'package:salon/presentation/resources/values_manager.dart';
+import 'package:salon/presentation/uniti/dialog_wid.dart';
 import 'package:salon/presentation/uniti/image/image.dart';
 import 'package:salon/presentation/uniti/text.dart';
+import 'package:salon/presentation/uniti/text_field.dart';
 import 'package:salon/presentation/user/user_home/bloc/user_nav_bloc.dart';
 class ServiceWid extends StatelessWidget {
-  const ServiceWid({super.key,required this.service,required this.index});
+   ServiceWid({super.key,required this.service,required this.index});
   final Service service;
   final index;
+  final TextEditingController _dataController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return   Padding(
@@ -89,33 +94,72 @@ class ServiceWid extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10,),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets
-                        .all(
-                        6), // Adjust padding to control the size of the circle
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: ColorManager.secondaryColor
-                          .withOpacity(
-                          0.3), // Transparent gray color
-                    ),
-                    child: Icon(
-                      Icons
-                          .app_registration,
-                      size: 30,
-                      color: ColorManager
-                          .white,
+           
+            InkWell(
+              onTap: (){
+                showDialog(
+                  context: context,
+                  builder: (context) => DialogFilter(
+                    text: "Reservetion",
+                    widget: Column(
+                      children: [
+                        Row(children: [
+                          Expanded(child: TextFieldWidget(
+                            hint: "data",
+                            controller: _dataController,
+                            textInputType: TextInputType.number ,
+                          ),),
+                          Expanded(child: TextFieldWidget(
+                            hint: "time",
+                            controller: _timeController,
+                            textInputType: TextInputType.number ,
+                          ),)
+                        ],),
+                        SizedBox(height: 25,),
+                        ElevatedButton(onPressed: (){
+                          if (_dataController.text!=""&&_timeController.text!="") {
+                            BlocProvider.of<UserNavBloc>(context).add(AddAppointmentEvent
+                              (
+                                service.id,
+                                _dataController.text,
+                              _timeController.text
+                            ));
+                            Navigator.pop(context);
+                          }
+                        }, child: Text("Ok"))
+                      ],
                     ),
                   ),
-                  SizedBox(width: 10,),
-                  Text("Click to book a service",style: Theme.of(context).textTheme.titleLarge,)
-                ],
+                );
+              },
+              child:  Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets
+                          .all(
+                          6), // Adjust padding to control the size of the circle
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorManager.secondaryColor
+                            .withOpacity(
+                            0.3), // Transparent gray color
+                      ),
+                      child: Icon(
+                        Icons
+                            .app_registration,
+                        size: 30,
+                        color: ColorManager
+                            .white,
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Text("Click to book a service",style: Theme.of(context).textTheme.titleLarge,)
+                  ],
+                ),
               ),
             ),
           ],
