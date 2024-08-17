@@ -4,6 +4,7 @@ import 'package:salon/app/app_preferences.dart';
 import 'package:salon/app/di.dart';
 import 'package:salon/app/user_info.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initAppModule();
