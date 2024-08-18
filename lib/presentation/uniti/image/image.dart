@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:salon/app/constants.dart';
 final ImagePicker imagePicker = ImagePicker();
 
 Widget image(String image, {BoxShape box =BoxShape.rectangle}){
@@ -13,10 +14,9 @@ Widget image(String image, {BoxShape box =BoxShape.rectangle}){
     child:Image.network(
       height: 120,
       width: 120,
-      image,
+      "${Constants.imageUrl}${image}",
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        print(error);
         return const Text("No network !");
       },
     ),
@@ -29,10 +29,10 @@ Widget imageProduct(String image, {BoxShape box =BoxShape.rectangle}){
     child: Image.network(
       height: 300,
       //    width: 100,
-      image,
+      "${Constants.imageUrl}${image}",
+
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        print(error);
         return const Text("No network !");
       },
     ),

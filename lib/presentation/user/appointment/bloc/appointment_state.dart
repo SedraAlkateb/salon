@@ -21,6 +21,22 @@ final class AppointmentsLoadingState extends AppointmentState {
   List<Object?> get props =>[];
 }
 
+class EditAppointmentState extends AppointmentState {
+
+  EditAppointmentState();
+  List<Object?> get props =>[];
+}
+final class EditAppointmentErrorState extends AppointmentState {
+  final Failure failure;
+  EditAppointmentErrorState({required this.failure});
+  List<Object?> get props =>[failure];
+}
+final class EditAppointmentLoadingState extends AppointmentState {
+  @override
+  EditAppointmentLoadingState();
+  List<Object?> get props =>[];
+}
+
 class DeleteAppointmentState extends AppointmentState {
 int index;
   DeleteAppointmentState(this.index);

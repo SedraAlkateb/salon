@@ -25,6 +25,7 @@ class ServicesPage extends StatefulWidget {
 class _ServicesPageState extends State<ServicesPage> {
   @override
   void initState() {
+    initServicesModule();
     BlocProvider.of<ServiceBloc>(context).add(AllService());
     super.initState();
   }

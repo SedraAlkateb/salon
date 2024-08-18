@@ -29,6 +29,15 @@ class ServiceUser extends StatelessWidget {
           if (state is ServicesState) {
             success(context);
           }
+          if (state is AddAppointmentErrorState) {
+            error(context, state.failure.massage, state.failure.code);
+          }
+          if (state is AddAppointmentLoadingState) {
+            loading(context);
+          }
+          if (state is AddAppointmentState) {
+            success(context);
+          }
         },
         builder: (context, state) {
           List<Service> services =

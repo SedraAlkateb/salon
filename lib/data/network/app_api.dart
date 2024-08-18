@@ -195,4 +195,11 @@ abstract class AppServiceClient {
   Future<AllAdminBaseResponse> findAdmin(
       @Path("find") String find,
       );
+  @POST("/updateAppointment/{id}")
+  Future<MessageResponse> updateAppointment(
+      @Path("id") int id,
+      @Part(name: "service_id") int serviceId,
+      @Part(name: "date") String? date,
+  @Part(name: "time") String? time
+      );
 }

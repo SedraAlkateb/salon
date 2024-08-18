@@ -927,4 +927,27 @@ class RepositoryImp implements Repository {
           .failure);
     }
   }
+
+  @override
+  Future<Either<Failure, MessageResponse>> updateAppointment(EditAppointmentReq editAppointmentReq) async{
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.updateAppointment(editAppointmentReq);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
 }

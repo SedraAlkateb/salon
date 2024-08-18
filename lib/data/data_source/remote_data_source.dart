@@ -61,7 +61,9 @@ AddProductReq addProductReq
   Future<ProductsBaseResponse> findProduct( String find,);
   Future<EmployeesBaseResponse> findEmployee(String find,);
   Future<AllAdminBaseResponse> findAdmin( String find,);
-
+  Future<MessageResponse> updateAppointment(
+      EditAppointmentReq editAppointmentReq
+      );
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -344,4 +346,15 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<SalonsBaseResponse> findSalon(String find) async {
     return await _appServiceClient.findSalon(find);
   }
+
+  @override
+  Future<MessageResponse> updateAppointment(EditAppointmentReq editAppointmentReq) async {
+    return await _appServiceClient.updateAppointment(
+      editAppointmentReq.id,
+      editAppointmentReq.serviceId,
+      editAppointmentReq.date,
+      editAppointmentReq.time
+    );
+  }
+
 }

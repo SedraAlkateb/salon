@@ -7,12 +7,12 @@ import 'package:salon/presentation/uniti/decoration.dart';
 
 
 class CustomDate extends StatelessWidget {
-   CustomDate({Key? key,required this.dateInput,required this.width,required this.onChanged, this.validator}) : super(key: key);
+   CustomDate({Key? key,required this.dateInput,required this.width,required this.onChanged, this.validator,this.hint='YY-MM-DD'}) : super(key: key);
   final TextEditingController dateInput;
   final double width;
   var onChanged;
    final FormFieldValidator<dynamic>? validator;
-
+   String ? hint;
    @override
   Widget build(BuildContext context) {
     return    SizedBox(
@@ -40,7 +40,7 @@ class CustomDate extends StatelessWidget {
         decoration: KTextField1Decoration.copyWith(
           filled: true,
           fillColor: ColorManager.grey,
-          hintText: 'YY-MM-DD',
+          hintText:hint ,
           prefixIcon:  Icon(
             Icons.calendar_today,
             color: ColorManager.secondaryColor,

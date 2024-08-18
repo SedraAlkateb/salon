@@ -39,6 +39,7 @@ import 'package:salon/domain/usecase/signup_usecase.dart';
 import 'package:salon/domain/usecase/store_Salon_usecase.dart';
 import 'package:salon/domain/usecase/store_admin_usecase.dart';
 import 'package:salon/domain/usecase/update_admin_usecase.dart';
+import 'package:salon/domain/usecase/update_appointment_usecase.dart';
 import 'package:salon/domain/usecase/update_salon_usecase.dart';
 import 'package:salon/domain/usecase/view_admin_usecase.dart';
 import 'package:salon/domain/usecase/view_employee_usecase.dart';
@@ -142,13 +143,14 @@ Future<void>initServicesModule() async{
   if(!GetIt.I.isRegistered<AllServicesUsecase>()) {
     instance.registerFactory<AllServicesUsecase>(() =>AllServicesUsecase(instance()));
   }
-  if(!GetIt.I.isRegistered<DeleteServiceUsecase>()) {
-
-    instance.registerFactory<DeleteServiceUsecase>(() =>DeleteServiceUsecase(instance()));
+  if(!GetIt.I.isRegistered<ViewServiceUsecase>()) {
     instance.registerFactory<ViewServiceUsecase>(() =>ViewServiceUsecase(instance()));
+  }
+
+  if(!GetIt.I.isRegistered<DeleteServiceUsecase>()) {
+    instance.registerFactory<DeleteServiceUsecase>(() =>DeleteServiceUsecase(instance()));
 //    instance.registerFactory<UpdateServiceUsecase>(() =>UpdateServiceUsecase(instance()));
     instance.registerFactory<AddServiceUsecase>(() =>AddServiceUsecase(instance()));
-
     instance.registerFactory<ServiceBloc>(() =>ServiceBloc(instance(),instance(),instance(),instance()));
   }
 
@@ -233,6 +235,7 @@ Future<void>initAppointmentModule() async{
   if(!GetIt.I.isRegistered<AllAppointmentUsecase>()) {
     instance.registerFactory<DeleteAppointmentUsecase>(() =>DeleteAppointmentUsecase(instance()));
     instance.registerFactory<AllAppointmentUsecase>(() =>AllAppointmentUsecase(instance()));
-    instance.registerFactory<AppointmentBloc>(() =>AppointmentBloc(instance(),instance()));
+    instance.registerFactory<UpdateAppointmentUsecase>(() =>UpdateAppointmentUsecase(instance()));
+    instance.registerFactory<AppointmentBloc>(() =>AppointmentBloc(instance(),instance(),instance()));
   }
 }

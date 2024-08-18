@@ -49,5 +49,5 @@ abstract class Repository{
  Future<Either<Failure,List<Product>>>findProduct( String find,);
  Future<Either<Failure,List<Employees>>> findEmployee(String find,);
  Future<Either<Failure,AllAdminModel>>findAdmin( String find);
-
+ Future<Either<Failure,MessageResponse>>updateAppointment(EditAppointmentReq editAppointmentReq);
 }

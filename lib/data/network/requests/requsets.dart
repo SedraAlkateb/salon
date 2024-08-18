@@ -132,3 +132,11 @@ class AddProductReq {
   AddProductReq(this.name, this.description,
       this.price, this.quantity,this.image);
 }
+class EditAppointmentReq{
+  int id;
+  int serviceId;
+  String ?date;
+  String ?time;
+
+  EditAppointmentReq(this.id, this.serviceId, this.date, this.time);
+}

@@ -6,10 +6,11 @@ import 'package:salon/presentation/resources/color_manager.dart';
 import 'package:salon/presentation/uniti/decoration.dart';
 
 class CustomTime extends StatelessWidget {
-   CustomTime({Key? key,required this.timeInput,required this.width,required this.onTap}) : super(key: key);
+   CustomTime({Key? key,required this.timeInput,required this.width,required this.onTap,this.hint='HH/MM'}) : super(key: key);
 TextEditingController timeInput ;
 final double width;
 var onTap;
+String? hint;
   @override
   Widget build(BuildContext context) {
     return       SizedBox(
@@ -33,7 +34,7 @@ var onTap;
         decoration: KTextField1Decoration.copyWith(
           filled: true,
           fillColor: ColorManager.filedColor,
-          hintText: 'HH/MM',
+          hintText: hint,
           prefixIcon:  Icon(
             Icons.access_time,
             color: ColorManager.secondaryColor,
