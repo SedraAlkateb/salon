@@ -50,3 +50,17 @@ class AddAppointmentEvent extends UserNavEvent {
   // TODO: implement props
   List<Object?> get props =>[id,data,time];
 }
+class UserFindProduct extends UserNavEvent {
+  String find;
+  UserFindProduct(this.find);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[find];
+}
+class  UserFindSalon extends UserNavEvent {
+  String find;
+  UserFindSalon(this.find);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[find];
+}

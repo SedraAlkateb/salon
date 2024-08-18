@@ -6,10 +6,12 @@ import 'package:salon/data/responses/responses.dart';
 import 'package:salon/domain/models/models.dart';
 
 abstract class RemoteDataSource{
+  Future<MessageResponse> logout(
+      );
   Future<TokenResponse > login(LoginRequest loginRequest);
   Future<TokenResponse > customerLogin(LoginRequest loginRequest);
   Future<TokenResponse > loginAdmin(LoginRequest loginRequest);
-
+  Future<TokenResponse> customerRegister(SignupRequest signupReq);
   Future<AllAdminBaseResponse > allAdmin();
   Future<MessageResponse > deleteAdmin(int id);
   Future<MessageResponse > storeAdmin(StoreAdminRequest storeAdminRequest);
@@ -49,6 +51,17 @@ abstract class RemoteDataSource{
       );
 
   Future<MessageResponse> addService(AddServiceReq addServiceReq);
+  Future<MessageResponse> addEmployee(
+      AddEmployeeReq addEmployeeReq
+      );
+  Future<MessageResponse> addProduct(
+AddProductReq addProductReq
+      );
+  Future<SalonsBaseResponse> findSalon( String find,);
+  Future<ProductsBaseResponse> findProduct( String find,);
+  Future<EmployeesBaseResponse> findEmployee(String find,);
+  Future<AllAdminBaseResponse> findAdmin( String find,);
+
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -276,5 +289,59 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     return await _appServiceClient.addService(
         addServiceReq.name,addServiceReq.description,addServiceReq.image??File(""),
         addServiceReq.status,addServiceReq.price,addServiceReq.employee_id);
+  }
+
+  @override
+  Future<MessageResponse> addEmployee(AddEmployeeReq addEmployeeReq)  async {
+    return await _appServiceClient.addEmployee(
+        addEmployeeReq.name,addEmployeeReq.salary,addEmployeeReq.image);
+  }
+
+  @override
+  Future<MessageResponse> addProduct(AddProductReq addProductReq)
+  async {
+    return await _appServiceClient.addProduct(
+        addProductReq.name,addProductReq.description,
+        addProductReq.price,addProductReq.quantity,
+      addProductReq.image,
+        );
+  }
+
+  @override
+  Future<TokenResponse> customerRegister(SignupRequest signupReq) async {
+    return await _appServiceClient.customerRegister(
+        signupReq.name,
+        signupReq.password,
+        signupReq.c_password,
+        signupReq.phone_number,
+        signupReq.email
+    );
+  }
+
+  @override
+  Future<MessageResponse> logout() async {
+    return await _appServiceClient.logout(
+    );
+  }
+
+  @override
+  Future<AllAdminBaseResponse> findAdmin(String find) async {
+    return await _appServiceClient.findAdmin(find
+    );
+  }
+  @override
+  Future<EmployeesBaseResponse> findEmployee(String find) async {
+    return await _appServiceClient.findEmployee(find
+    );
+  }
+  @override
+  Future<ProductsBaseResponse> findProduct(String find) async {
+    return await _appServiceClient.findProduct(find
+    );
+  }
+
+  @override
+  Future<SalonsBaseResponse> findSalon(String find) async {
+    return await _appServiceClient.findSalon(find);
   }
 }

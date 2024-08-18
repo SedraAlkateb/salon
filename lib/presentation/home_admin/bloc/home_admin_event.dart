@@ -85,3 +85,10 @@ final class CheckNameEvent extends HomeAdminEvent{
   @override
   List<Object?> get props => [name];
 }
+class FindAdmin extends HomeAdminEvent {
+  String find;
+  FindAdmin(this.find);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[find];
+}

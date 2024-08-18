@@ -27,6 +27,27 @@ final class AllAdminLoadingState extends HomeAdminState {
 }
 
 
+final class FindAdminState extends HomeAdminState {
+  final AllAdminModel allAdminModel;
+  FindAdminState({required this.allAdminModel});
+  @override
+  List<Object?> get props =>[allAdminModel];
+}
+final class FindAdminErrorState extends HomeAdminState {
+  final Failure failure;
+  FindAdminErrorState({required this.failure});
+  @override
+
+  List<Object?> get props =>[failure];
+}
+final class FindAdminLoadingState extends HomeAdminState {
+  @override
+  FindAdminLoadingState();
+  @override
+  List<Object?> get props =>[];
+}
+
+
 final class DeleteAdminState extends HomeAdminState {
   DeleteAdminState();
   @override

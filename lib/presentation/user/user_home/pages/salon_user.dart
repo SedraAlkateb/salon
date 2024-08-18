@@ -48,7 +48,26 @@ class SalonUser extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SearchField(searchController: _searchController),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: SearchField(
+                                searchController:_searchController,
+                                onPressed: (){
+                                  BlocProvider.of<UserNavBloc>(context).add(UserFindSalon(_searchController.text));
+                                },
+                              ),
+                            ),
+                            InkWell(
+                                onTap: (){
+                                  BlocProvider.of<UserNavBloc>(context).add(AllSalon());
+                                },
+                                child: Text("All",)),
+                          ],
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(
                             right: AppPadding.p8,

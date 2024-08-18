@@ -38,11 +38,7 @@ class  AppPreferences {
   Future<void> signOut()async{
     await _sharedPreferences.remove(PREFS_KEY_TOKEN);
     await _sharedPreferences.remove(PREFS_KEY_LS_USER_LOGGED_IN);
-    await _sharedPreferences.remove(PREFS_KEY_USER_FIRSTNAME);
-    await _sharedPreferences.remove(PREFS_KEY_USER_LASTNAME);
-    await _sharedPreferences.remove(PREFS_KEY_USER_EMAIL);
-    await _sharedPreferences.remove(PREFS_KEY_USER_WHATSAPP);
-    await _sharedPreferences.remove(PREFS_KEY_USER_IMAGE);
+    await _sharedPreferences.remove(PREFS_KEY_Type);
 
   }
   reload()async{

@@ -8,6 +8,8 @@ import 'package:salon/domain/usecase/add_appointment_usecase.dart';
 import 'package:salon/domain/usecase/add_item_usecase.dart';
 import 'package:salon/domain/usecase/all_product_usecase.dart';
 import 'package:salon/domain/usecase/all_services_usecase.dart';
+import 'package:salon/domain/usecase/find_product_usecase.dart';
+import 'package:salon/domain/usecase/find_salon_usecase.dart';
 import 'package:salon/domain/usecase/salons_usecase.dart';
 import 'package:salon/domain/usecase/view_service_usecase.dart';
 
@@ -26,6 +28,9 @@ class UserNavBloc extends Bloc<UserNavEvent, UserNavState> {
   AllProductUsecase productsUsecase;
   ViewServiceUsecase viewServiceUsecase;
   AddItemUsecase addItemUsecase;
+  FindProductUsecase findProductUsecase;
+  FindSalonUsecase findSalonUsecase;
+
   AddAppointmentUsecase addAppointmentUsecase;
   UserNavBloc(
       this.productsUsecase,
@@ -33,7 +38,9 @@ class UserNavBloc extends Bloc<UserNavEvent, UserNavState> {
       this.salonsUsecase,
       this.viewServiceUsecase,
       this.addItemUsecase,
-      this.addAppointmentUsecase
+      this.addAppointmentUsecase,
+      this.findProductUsecase,
+      this.findSalonUsecase
       ) : super(UserNavInitial()) {
     on<UserNavEvent>((event, emit) async{
       if (event is ChangeTapNav) {
@@ -41,6 +48,7 @@ class UserNavBloc extends Bloc<UserNavEvent, UserNavState> {
         emit(IndexTabNavChanged(index: index));
       }
       if(event is AllProduct){
+        products=[];
         emit(ProductsLoadingState());
         ( await productsUsecase. execute()).fold(
 
@@ -54,20 +62,6 @@ class UserNavBloc extends Bloc<UserNavEvent, UserNavState> {
       }
       );
     }
-      if(event is AllService){
-        emit(ServicesLoadingState());
-        ( await servicesUsecase. execute()).fold(
-
-                (failure)  {
-              emit(ServicesErrorState(failure: failure));
-            },
-                (data)  async{
-              services=data;
-
-              emit(ServicesState(data));
-            }
-        );
-      }
       if(event is AllSalon){
         salons=[];
         emit(SalonsLoadingState());
@@ -80,6 +74,51 @@ class UserNavBloc extends Bloc<UserNavEvent, UserNavState> {
               salons=data;
 
               emit(SalonsState(data));
+            }
+        );
+      }
+      if(event is UserFindProduct){
+        products=[];
+        emit(ProductsLoadingState());
+        ( await findProductUsecase. execute(event.find)).fold(
+
+                (failure)  {
+              emit(ProductsErrorState(failure: failure));
+            },
+                (data)  async{
+              products=data;
+
+              emit(ProductsState(data));
+            }
+        );
+      }
+      if(event is UserFindSalon){
+        salons=[];
+        emit(SalonsLoadingState());
+        ( await findSalonUsecase. execute(event.find)).fold(
+
+                (failure)  {
+              emit(SalonsErrorState(failure: failure));
+            },
+                (data)  async{
+              salons=data;
+
+              emit(SalonsState(data));
+            }
+        );
+      }
+      if(event is AllService){
+        services=[];
+        emit(ServicesLoadingState());
+        ( await servicesUsecase. execute()).fold(
+
+                (failure)  {
+              emit(ServicesErrorState(failure: failure));
+            },
+                (data)  async{
+              services=data;
+
+              emit(ServicesState(data));
             }
         );
       }

@@ -10,6 +10,7 @@ import 'package:salon/data/network/failure.dart';
 import 'package:salon/data/network/requests/requsets.dart';
 import 'package:salon/domain/models/models.dart';
 import 'package:salon/domain/usecase/delete_salon_usecase.dart';
+import 'package:salon/domain/usecase/find_salon_usecase.dart';
 import 'package:salon/domain/usecase/salons_usecase.dart';
 import 'package:salon/domain/usecase/store_Salon_usecase.dart';
 import 'package:salon/domain/usecase/update_salon_usecase.dart';
@@ -26,6 +27,7 @@ class SalonBloc extends Bloc<SalonEvent, SalonState> {
   UpdateSalonUsecase updateSalonUsecase;
   StoreSalonUsecase storeSalonUsecase;
   ShowSalonModel? salonModel;
+  FindSalonUsecase findSalonUsecase;
   CreateSalonObject salon=CreateSalonObject("", "", null, "active","","") ;
    LatLng center=LatLng(33.515343,36.289590);
   File? image1;
@@ -39,7 +41,8 @@ String name="";
       this.deleteSalonUsecase,
       this.viewSalonUsecase,
       this.updateSalonUsecase,
-      this.storeSalonUsecase
+      this.storeSalonUsecase,
+      this.findSalonUsecase
       ) : super(SalonInitial()) {
     on<SalonEvent>((event, emit) async{
 
@@ -59,6 +62,23 @@ String name="";
       }
       );
     }
+      if(event is FindSalon){
+        salons=[];
+        emit(FindSalonLoadingState());
+        ( await findSalonUsecase.execute(
+          event.find
+        )).fold(
+
+                (failure)  {
+              emit(FindSalonErrorState(failure: failure));
+            },
+                (data)  async{
+              salons=data;
+
+              emit(FindSalonState(data));
+            }
+        );
+      }
       if(event is DeleteSalonEvent){
         emit(DeleteSalonLoadingState());
         ( await deleteSalonUsecase. execute(event.id)).fold(

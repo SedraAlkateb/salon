@@ -10,6 +10,8 @@ import 'package:salon/data/network/requests/requsets.dart';
 import 'package:salon/domain/usecase/login_admin_usecase.dart';
 import 'package:salon/domain/usecase/login_customer_usecase.dart';
 import 'package:salon/domain/usecase/login_usecase.dart';
+import 'package:salon/domain/usecase/logout_usecase.dart';
+import 'package:salon/domain/usecase/signup_usecase.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -19,13 +21,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   LoginUsecase loginUsecase;
   LoginAdminUsecase loginAdminUsecase;
   LoginCustomerUsecase loginCustomerUsecase;
-
+  SignupUsecase signupUsecase;
+  LogoutUsecase logoutUsecase;
   int type=0;
   AuthBloc(
   {
     required this.loginUsecase,
     required this.loginAdminUsecase,
-    required this.loginCustomerUsecase
+    required this.loginCustomerUsecase,
+    required this.signupUsecase,
+    required this.logoutUsecase
 
   }
       ) : super(AuthInitial()) {
@@ -86,6 +91,43 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
          );
        }
+      }
+      if(event is SignupEvent){
+        Constants.type=2;
+        emit(SignupLoadingState());
+        (
+            await signupUsecase.execute(
+                SignupRequest(
+                  event.name,
+                    event.password,
+                    event.password_c,
+                    event.phone, event.email
+                ))).fold(
+                (failure)  {
+              emit(SignupErrorState(failure: failure));
+            },
+                (data)  async{
+              sharedPreferences.setLoggedIn(data.token,type);
+              UserInfo.token=data.token;
+              emit(SignupState(message: data.token));
+            }
+
+        );
+      }
+      if(event is LogoutEvent){
+        emit(LogoutLoadingState());
+        (
+            await logoutUsecase.execute()).fold(
+                (failure)  {
+              emit(LogoutErrorState(failure: failure));
+            },
+                (data)  async{
+              sharedPreferences.signOut();
+              UserInfo.token=null;
+              emit(LogoutState());
+            }
+
+        );
       }
       if(event is ChangeTypeEvent){
         type=event.type;

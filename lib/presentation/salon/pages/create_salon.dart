@@ -106,7 +106,7 @@ class CreateSalon extends StatelessWidget {
                           child:  TextFieldWidget(
                             hint: "",
                             controller: nameController,
-                            obscureText:true,
+
                             textInputType: TextInputType.text,
                             validator: (value) {
                               if (value!.isEmpty) {

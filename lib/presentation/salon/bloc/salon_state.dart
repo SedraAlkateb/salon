@@ -147,3 +147,23 @@ final class AddSalonLoadingState extends SalonState {
   @override
   List<Object?> get props =>[];
 }
+
+final class FindSalonState extends SalonState {
+  final List<SalonModel> salons;
+  FindSalonState(this.salons);
+  @override
+  List<Object?> get props =>[salons];
+}
+final class FindSalonErrorState extends SalonState {
+  final Failure failure;
+  FindSalonErrorState({required this.failure});
+  @override
+
+  List<Object?> get props =>[failure];
+}
+final class FindSalonLoadingState extends SalonState {
+  @override
+  FindSalonLoadingState();
+  @override
+  List<Object?> get props =>[];
+}

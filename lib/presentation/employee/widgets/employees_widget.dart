@@ -40,7 +40,7 @@ class EmployeesWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: AppPadding.p8),
+                    horizontal: AppPadding.p2),
                 child: image(employee.image),
               ),
               Expanded(

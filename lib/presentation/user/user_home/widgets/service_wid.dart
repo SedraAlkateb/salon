@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:salon/domain/models/models.dart';
 import 'package:salon/presentation/resources/color_manager.dart';
 import 'package:salon/presentation/resources/routes_manager.dart';
 import 'package:salon/presentation/resources/values_manager.dart';
+import 'package:salon/presentation/uniti/custom_date.dart';
+import 'package:salon/presentation/uniti/custom_time.dart';
 import 'package:salon/presentation/uniti/dialog_wid.dart';
 import 'package:salon/presentation/uniti/image/image.dart';
 import 'package:salon/presentation/uniti/text.dart';
@@ -13,10 +16,11 @@ class ServiceWid extends StatelessWidget {
    ServiceWid({super.key,required this.service,required this.index});
   final Service service;
   final index;
-  final TextEditingController _dataController = TextEditingController();
-  final TextEditingController _timeController = TextEditingController();
+   TextEditingController travelTime = TextEditingController();
+   TextEditingController travelDate = TextEditingController();
 
-  @override
+
+   @override
   Widget build(BuildContext context) {
     return   Padding(
       padding: const EdgeInsets.symmetric(vertical: 1),
@@ -104,25 +108,179 @@ class ServiceWid extends StatelessWidget {
                     widget: Column(
                       children: [
                         Row(children: [
-                          Expanded(child: TextFieldWidget(
-                            hint: "data",
-                            controller: _dataController,
-                            textInputType: TextInputType.number ,
-                          ),),
-                          Expanded(child: TextFieldWidget(
-                            hint: "time",
-                            controller: _timeController,
-                            textInputType: TextInputType.number ,
-                          ),)
+                          Expanded(child:
+                          CustomTime(
+                            timeInput: travelTime,
+                            width: MediaQuery.of(context).size.width * 0.4,
+
+                            onTap: () async {
+                  TimeOfDay? pickedDate =
+                      await showTimePicker(
+                    context: context,
+                    initialEntryMode:
+                    TimePickerEntryMode
+                        .input,
+                    initialTime:
+                    TimeOfDay.now(),
+                    builder:
+                        (context, child) {
+                      return Theme(
+                        data: Theme.of(
+                            context)
+                            .copyWith(
+                          colorScheme:
+                          ColorScheme
+                              .light(
+                            primary:
+                            ColorManager.secondaryColor, // <-- SEE HERE
+                            onPrimary: Colors
+                                .white, // <-- SEE HERE
+                            onSurface:
+                            ColorManager.secondaryColor, // <-- SEE HERE
+                          ),
+                          textButtonTheme:
+                          TextButtonThemeData(
+                            style: TextButton
+                                .styleFrom(
+                              //primary:
+                              //  secondaryColor // button text color
+                            ),
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
+                  );
+                  if (pickedDate != null) {
+                    var timeFormat =
+                    DateFormat("HH:mm");
+                    print(timeFormat);
+                    print("timeFormat");
+                    //  travelTime.text = timeFormat.format( );
+                    travelTime.text =
+                    '${pickedDate.hour.toString()}:${pickedDate.minute
+                        .toString()}:01';
+                    if (pickedDate.minute
+                        .toString()
+                        .length ==
+                        1)
+                      travelTime.text =
+                      '${pickedDate.hour.toString()}:0${pickedDate.minute
+                          .toString()}:01';
+                    if (pickedDate.hour
+                        .toString()
+                        .length ==
+                        1)
+                      travelTime.text =
+                      '0${pickedDate.hour.toString()}:${pickedDate.minute
+                          .toString()}:01';
+                    if (pickedDate.minute
+                        .toString()
+                        .length ==
+                        1 &&
+                        pickedDate.minute
+                            .toString()
+                            .length ==
+                            1)
+                      travelTime.text =
+                      '${pickedDate.hour.toString()}:0${pickedDate.minute
+                          .toString()}:01';
+                  } else {
+                    print(
+                        "Date is not selected");
+                  }
+                 },
+                          )
+                          ),
+                          SizedBox(width: 10,),
+                          Expanded(child:
+                          CustomDate(
+                            dateInput: travelDate,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            onChanged: () async {
+                              DateTime? pickedDate =
+                              await showDatePicker(
+                                context: context,
+                                initialDate:
+                                DateTime.now(),
+                                firstDate:
+                                DateTime.now()
+                                    .subtract(
+                                    Duration(
+                                        days:
+                                        0)),
+                                lastDate:
+                                DateTime(2101),
+                                locale: null,
+                                builder:
+                                    (context, child) {
+                                  return Theme(
+                                    data: Theme.of(
+                                        context)
+                                        .copyWith(
+                                      colorScheme:
+                                      ColorScheme
+                                          .light(
+                                        primary:
+                                        ColorManager.secondaryColor, // <-- SEE HERE
+                                        onPrimary: Colors
+                                            .white, // <-- SEE HERE
+                                        onSurface:
+                                        ColorManager.secondaryColor, // <-- SEE HERE
+                                      ),
+                                      textButtonTheme:
+                                      TextButtonThemeData(
+                                        style: TextButton
+                                            .styleFrom(
+                                          //primary:
+                                          //  secondaryColor, // button text color
+                                        ),
+                                      ),
+                                    ),
+                                    child: child!,
+                                  );
+                                },
+                              );
+
+                              if (pickedDate != null) {
+                                String formattedDate =
+                                DateFormat(
+                                    'y-MM-DD')
+                                    .format(
+                                    pickedDate);
+
+                                travelDate.text =
+                                pickedDate
+                                    .toString()
+                                    .split(' ')[0];
+                                print(travelDate.text);
+                              } else {
+                                print(
+                                    "Date is not selected");
+                              }
+                            },
+                          )
+                          )
                         ],),
                         SizedBox(height: 25,),
+                        Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment
+                              .spaceBetween,
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          children: [
+
+
+                          ],
+                        ),
                         ElevatedButton(onPressed: (){
-                          if (_dataController.text!=""&&_timeController.text!="") {
+                          if (travelDate.text!=""&&travelTime.text!="") {
                             BlocProvider.of<UserNavBloc>(context).add(AddAppointmentEvent
                               (
                                 service.id,
-                                _dataController.text,
-                              _timeController.text
+                                travelDate.text,
+                              travelTime.text
                             ));
                             Navigator.pop(context);
                           }

@@ -28,6 +28,26 @@ final class ProductsLoadingState extends ProductState {
   List<Object?> get props =>[];
 }
 
+final class FindProductState extends ProductState {
+  final List<Product> FindProduct;
+  FindProductState(this.FindProduct);
+  @override
+  List<Object?> get props =>[FindProduct];
+}
+final class FindProductErrorState extends ProductState {
+  final Failure failure;
+  FindProductErrorState({required this.failure});
+  @override
+
+  List<Object?> get props =>[failure];
+}
+final class FindProductLoadingState extends ProductState {
+  @override
+  FindProductLoadingState();
+  @override
+  List<Object?> get props =>[];
+}
+
 final class DeleteProductState extends ProductState {
 
   DeleteProductState();
@@ -78,5 +98,36 @@ final class UpdateProductErrorState extends ProductState {
 final class UpdateProductLoadingState extends ProductState {
   UpdateProductLoadingState();
   @override
+  List<Object?> get props =>[];
+}
+final class AddProductState extends ProductState {
+
+  AddProductState();
+  @override
+  List<Object?> get props =>[];
+}
+final class AddProductErrorState extends ProductState {
+  final Failure failure;
+  AddProductErrorState({required this.failure});
+  @override
+  List<Object?> get props =>[failure];
+}
+final class AddProductLoadingState extends ProductState {
+  AddProductLoadingState();
+  @override
+  List<Object?> get props =>[];
+}
+final class AddImageToProduct extends ProductState {
+  File image;
+  AddImageToProduct(this.image);
+  @override
+  List<Object?> get props =>[image];
+}
+class ChangeStatusState extends ProductState {
+  final String status;
+  ChangeStatusState(this.status);
+
+  @override
+  // TODO: implement props
   List<Object?> get props =>[];
 }

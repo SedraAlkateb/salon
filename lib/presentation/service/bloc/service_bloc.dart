@@ -32,6 +32,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       ) : super(ServiceInitial()) {
     on<ServiceEvent>((event, emit) async{
       if(event is AllService){
+        services=[];
         emit(ServicesLoadingState());
         ( await servicesUsecase. execute()).fold(
 

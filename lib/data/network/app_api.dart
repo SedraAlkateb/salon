@@ -7,22 +7,28 @@ part 'app_api.g.dart';
 @RestApi(baseUrl: Constants.baseUrl)
 abstract class AppServiceClient {
   factory AppServiceClient(Dio dio, {String baseUrl}) = _AppServiceClient;
-  @POST("/v1/password/change")
-  Future<MessageResponse> changePassword(
-      @Part(name: "old_password") String old_password,
-      @Part(name: "new_password") String new_password,
-      @Part(name: "confirm_password") String confirm_password,
+  @POST("/logout")
+  Future<MessageResponse> logout(
       );
   @POST("/loginSuperAdmin")
   Future<TokenResponse> superAdminLogin(
   @Part(name: "email") String email,
   @Part(name: "password") String password,
   );
+  @POST("/customerRegister")
+  Future<TokenResponse> customerRegister(
+      @Part(name: "name") String name,
+      @Part(name: "password") String password,
+      @Part(name: "c_password") String c_password,
+      @Part(name: "phone_number") String phone_number,
+      @Part(name: "email") String email,
+      );
   @POST("/loginAdmin")
   Future<TokenResponse> loginAdmin(
       @Part(name: "user_name") String userName,
       @Part(name: "password") String password,
       );
+
   @POST("/customerLogin")
   Future<TokenResponse> customerLogin(
       @Part(name: "email") String email,
@@ -96,7 +102,7 @@ abstract class AppServiceClient {
   Future<MessageResponse> deleteService(
       @Path("id") int id
       );
-  @DELETE("/service/store")
+  @POST("/service/store")
   Future<MessageResponse> addService(
       @Part(name: "name") String name,
       @Part(name: "description") String ?description,
@@ -159,5 +165,34 @@ abstract class AppServiceClient {
   Future<ShowAppointmentBaseResponse> showAppointment(
       @Path("id") int id,
       );
-
+  @POST("/employee/store")
+  Future<MessageResponse> addEmployee(
+      @Part(name: "name") String name,
+      @Part(name: "salary") int salary,
+      @Part(name: "image") File image,
+      );
+  @POST("/product/store")
+  Future<MessageResponse> addProduct(
+      @Part(name: "name") String name,
+      @Part(name: "description") String description,
+      @Part(name: "price") int price,
+      @Part(name: "quantity") int quantity,
+      @Part(name: "image") File image
+      );
+  @GET("/findSalon/{find}")
+  Future<SalonsBaseResponse> findSalon(
+      @Path("find") String find,
+      );
+  @GET("/findProduct/{find}")
+  Future<ProductsBaseResponse> findProduct(
+      @Path("find") String find,
+      );
+  @GET("/findEmployee/{find}")
+  Future<EmployeesBaseResponse> findEmployee(
+      @Path("find") String find,
+      );
+  @GET("/findAdmin/{find}")
+  Future<AllAdminBaseResponse> findAdmin(
+      @Path("find") String find,
+      );
 }

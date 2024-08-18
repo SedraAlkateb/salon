@@ -11,6 +11,7 @@ import 'package:salon/presentation/resources/assets_manager.dart';
 import 'package:salon/presentation/resources/color_manager.dart';
 import 'package:salon/presentation/resources/routes_manager.dart';
 import 'package:salon/presentation/resources/values_manager.dart';
+import 'package:salon/presentation/uniti/search_field.dart';
 import 'package:salon/presentation/uniti/stateWidget.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -26,6 +27,7 @@ class _ProductsPageState extends State<ProductsPage> {
     BlocProvider.of<ProductBloc>(context).add(AllProduct());
     super.initState();
   }
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +73,16 @@ class _ProductsPageState extends State<ProductsPage> {
                   if (state is ProductsState) {
                     success(context);
                   }
+
+                  if (state is FindProductErrorState) {
+                    error(context, state.failure.massage, state.failure.code);
+                  }
+                  if (state is FindProductLoadingState) {
+                    loading(context);
+                  }
+                  if (state is FindProductState) {
+                    success(context);
+                  }
                 },
                 builder: (context, state) {
                   List<Product> products =
@@ -103,6 +115,23 @@ class _ProductsPageState extends State<ProductsPage> {
                                 ),
                               ],
                             ),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SearchField(
+                                  searchController:_searchController,
+                                  onPressed: (){
+                                    BlocProvider.of<ProductBloc>(context).add(FindProduct(_searchController.text));
+                                  },
+                                ),
+                              ),
+                              InkWell(
+                                  onTap: (){
+                                    BlocProvider.of<ProductBloc>(context).add(AllProduct());
+                                  },
+                                  child: Text("All",)),
+                            ],
                           ),
                           ListView.separated(
                             physics: NeverScrollableScrollPhysics(),

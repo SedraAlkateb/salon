@@ -54,7 +54,7 @@ class NavPage extends StatelessWidget {
                 context.read<UserNavBloc>().index==1?
                 IconButton(onPressed: (){
                   initAppointmentModule();
-                  Navigator.pushNamed(context, Routes.cards);
+                  Navigator.pushNamed(context, Routes.appointments);
                   BlocProvider.of<AppointmentBloc>(context).add(AllAppointment());
                 },
                     icon:

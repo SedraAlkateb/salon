@@ -8,6 +8,7 @@ import 'package:salon/presentation/resources/color_manager.dart';
 import 'package:salon/presentation/resources/routes_manager.dart';
 import 'package:salon/presentation/resources/values_manager.dart';
 import 'package:salon/presentation/salon/bloc/salon_bloc.dart';
+import 'package:salon/presentation/uniti/search_field.dart';
 import 'package:salon/presentation/uniti/stateWidget.dart';
 class HomeAdminPage extends StatefulWidget {
  const  HomeAdminPage({super.key});
@@ -21,6 +22,8 @@ class _HomeAdminPageState extends State<HomeAdminPage> {
     BlocProvider.of<HomeAdminBloc>(context).add(AllAdminEvent());
     super.initState();
   }
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -64,6 +67,23 @@ leading: Builder(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("All Admin",style: Theme.of(context).textTheme.labelMedium,),
                     ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SearchField(
+                            searchController:_searchController,
+                            onPressed: (){
+                              BlocProvider.of<HomeAdminBloc>(context).add(FindAdmin(_searchController.text));
+                            },
+                          ),
+                        ),
+                        InkWell(
+                            onTap: (){
+                              BlocProvider.of<HomeAdminBloc>(context).add(AllAdminEvent());
+                            },
+                            child: Text("All",)),
+                      ],
+                    ),
                     BlocConsumer<HomeAdminBloc, HomeAdminState>(
               listener: (context, state) {
                 if(state is DeleteAdminErrorState){
@@ -84,6 +104,16 @@ leading: Builder(
                 if(state is DeleteAdminState){
                   success(context);
                 }
+                if(state is FindAdminLoadingState){
+                  loading(context);
+                }
+                if(state is FindAdminErrorState){
+                  error(context,state.failure.massage,state.failure.code);
+                }
+                if(state is FindAdminState) {
+                  success(context);
+                }
+                
               },
               builder: (context, state) {
                  List<Admin> allAdmin=BlocProvider.of<HomeAdminBloc>(context).allAdmin;

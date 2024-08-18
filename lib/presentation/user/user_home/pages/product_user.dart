@@ -43,8 +43,26 @@ class ProductUser extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
 
-                SearchField(searchController: _searchController),
-
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: SearchField(
+                          searchController:_searchController,
+                          onPressed: (){
+                            BlocProvider.of<UserNavBloc>(context).add(UserFindProduct(_searchController.text));
+                          },
+                        ),
+                      ),
+                      InkWell(
+                          onTap: (){
+                            BlocProvider.of<UserNavBloc>(context).add(AllProduct());
+                          },
+                          child: Text("All",)),
+                    ],
+                  ),
+                ),
                 BlocListener<UserNavBloc, UserNavState>(
                   listener: (context, state) {
                     if(state is AddItemLoadingState){

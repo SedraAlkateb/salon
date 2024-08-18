@@ -17,6 +17,15 @@ class DeleteEmployeeEvent extends EmployeeEvent {
   List<Object?> get props =>[];
 }
 
+class AddEmployeeEvent extends EmployeeEvent {
+  final String name;
+  final int salary;
+  AddEmployeeEvent(this.name,this.salary);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[];
+}
+
 class ShowEmployeeEvent extends EmployeeEvent {
   final  int id;
   ShowEmployeeEvent(this.id,);
@@ -24,4 +33,16 @@ class ShowEmployeeEvent extends EmployeeEvent {
   // TODO: implement props
   List<Object?> get props =>[];
 }
-
+final class AddImageToEmployeeEvent extends EmployeeEvent {
+  File image;
+  AddImageToEmployeeEvent(this.image);
+  @override
+  List<Object?> get props =>[image];
+}
+class FindEmployee extends EmployeeEvent {
+  String find;
+  FindEmployee(this.find);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[find];
+}

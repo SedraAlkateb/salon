@@ -6,6 +6,16 @@ class LoginRequest {
 
   LoginRequest(this.email, this.password);
 }
+class SignupRequest {
+String name;
+String password;
+String c_password;
+String phone_number;
+String email;
+
+SignupRequest(
+      this.name, this.password, this.c_password, this.phone_number, this.email);
+}
 
 class AppointmentReq {
   int id;
@@ -104,4 +114,21 @@ class AddServiceReq {
 
   AddServiceReq(this.name, this.description, this.image, this.status,
       this.price, this.employee_id);
+}
+class AddEmployeeReq{
+  String name;
+  int salary;
+  File image;
+
+  AddEmployeeReq(this.name, this.salary, this.image);
+}
+class AddProductReq {
+  String name;
+  String description;
+  int price;
+  int quantity;
+  File image;
+
+  AddProductReq(this.name, this.description,
+      this.price, this.quantity,this.image);
 }

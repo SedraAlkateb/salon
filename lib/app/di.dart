@@ -9,8 +9,10 @@ import 'package:salon/data/repository/repository.dart';
 import 'package:salon/domain/repostitory/repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:salon/domain/usecase/add_Employee_usecase.dart';
 import 'package:salon/domain/usecase/add_appointment_usecase.dart';
 import 'package:salon/domain/usecase/add_item_usecase.dart';
+import 'package:salon/domain/usecase/add_product_usecase.dart';
 import 'package:salon/domain/usecase/add_service_usecase.dart';
 import 'package:salon/domain/usecase/all_admin_usecase.dart';
 import 'package:salon/domain/usecase/all_appointment_usecase.dart';
@@ -19,14 +21,21 @@ import 'package:salon/domain/usecase/all_employee_usecase.dart';
 import 'package:salon/domain/usecase/all_product_usecase.dart';
 import 'package:salon/domain/usecase/all_services_usecase.dart';
 import 'package:salon/domain/usecase/delete_admin_usecase.dart';
+import 'package:salon/domain/usecase/delete_appointment_usecase.dart';
 import 'package:salon/domain/usecase/delete_employee_usecase.dart';
 import 'package:salon/domain/usecase/delete_product_usecase.dart';
 import 'package:salon/domain/usecase/delete_salon_usecase.dart';
 import 'package:salon/domain/usecase/delete_service_usecase.dart';
+import 'package:salon/domain/usecase/find_admin_usecase.dart';
+import 'package:salon/domain/usecase/find_employee_usecase.dart';
+import 'package:salon/domain/usecase/find_product_usecase.dart';
+import 'package:salon/domain/usecase/find_salon_usecase.dart';
 import 'package:salon/domain/usecase/login_admin_usecase.dart';
 import 'package:salon/domain/usecase/login_customer_usecase.dart';
 import 'package:salon/domain/usecase/login_usecase.dart';
+import 'package:salon/domain/usecase/logout_usecase.dart';
 import 'package:salon/domain/usecase/salons_usecase.dart';
+import 'package:salon/domain/usecase/signup_usecase.dart';
 import 'package:salon/domain/usecase/store_Salon_usecase.dart';
 import 'package:salon/domain/usecase/store_admin_usecase.dart';
 import 'package:salon/domain/usecase/update_admin_usecase.dart';
@@ -78,15 +87,18 @@ Future<void>initAppModule()async{
 Future<void>initLoginModule() async{
 
   if(!GetIt.I.isRegistered<LoginUsecase>()){
-  //  instance.registerFactory<RegisterUsecase>(() =>RegisterUsecase(instance()));
+    instance.registerFactory<SignupUsecase>(() =>SignupUsecase(instance()));
     instance.registerFactory<LoginUsecase>(() =>LoginUsecase(instance()));
     instance.registerFactory<LoginAdminUsecase>(() =>LoginAdminUsecase(instance()));
     instance.registerFactory<LoginCustomerUsecase>(() =>LoginCustomerUsecase(instance()));
+    instance.registerFactory<LogoutUsecase>(() =>LogoutUsecase(instance()));
 
     instance.registerFactory<AuthBloc>(() =>AuthBloc(
         loginUsecase: instance(),
         loginAdminUsecase: instance(),
-        loginCustomerUsecase:instance()
+        loginCustomerUsecase:instance(),
+      signupUsecase: instance(),
+      logoutUsecase: instance()
     ));
   }
 }
@@ -105,23 +117,23 @@ Future<void>initAllAdminModule() async{
     instance.registerFactory<ViewAdminUsecase>(() =>ViewAdminUsecase(instance()));
     instance.registerFactory<DeleteAdminUsecase>(() =>DeleteAdminUsecase(instance()));
     instance.registerFactory<UpdateAdminUsecase>(() =>UpdateAdminUsecase(instance()));
-
-    //  instance.registerFactory<SalonsUsecase>(() =>SalonsUsecase(instance()));
-
-    instance.registerFactory<HomeAdminBloc>(() =>HomeAdminBloc(instance(),instance(),instance(),instance(),instance()));
+    instance.registerFactory<FindAdminUsecase>(() =>FindAdminUsecase(instance()));
+    instance.registerFactory<HomeAdminBloc>(() =>HomeAdminBloc(instance(),instance(),instance(),instance(),instance(),instance()));
   }
 }
 Future<void>initSalonsModule() async{
   if(!GetIt.I.isRegistered<SalonsUsecase>()) {
     instance.registerFactory<SalonsUsecase>(() =>SalonsUsecase(instance()));
+    instance.registerFactory<FindSalonUsecase>(() =>FindSalonUsecase(instance()));
+
   }
   if(!GetIt.I.isRegistered<DeleteSalonUsecase>()) {
     instance.registerFactory<DeleteSalonUsecase>(() =>DeleteSalonUsecase(instance()));
     instance.registerFactory<ViewSalonUsecase>(() =>ViewSalonUsecase(instance()));
     instance.registerFactory<UpdateSalonUsecase>(() =>UpdateSalonUsecase(instance()));
     instance.registerFactory<StoreSalonUsecase>(() =>StoreSalonUsecase(instance()));
-
-    instance.registerFactory<SalonBloc>(() =>SalonBloc(instance(),instance(),instance(),instance(),instance()));
+    instance.registerFactory<SalonBloc>(() =>SalonBloc(instance(),instance(),
+        instance(),instance(),instance(),instance()));
   }
 
 
@@ -150,9 +162,9 @@ Future<void>initProductsModule() async{
     instance.registerFactory<DeleteProductUsecase>(() =>DeleteProductUsecase(instance()));
     instance.registerFactory<ViewProductUsecase>(() =>ViewProductUsecase(instance()));
 //    instance.registerFactory<UpdateProductUsecase>(() =>UpdateProductUsecase(instance()));
-    //  instance.registerFactory<StoreProductUsecase>(() =>StoreProductUsecase(instance()));
-
-    instance.registerFactory<ProductBloc>(() =>ProductBloc(instance(),instance(),instance()));
+      instance.registerFactory<AddProductUsecase>(() =>AddProductUsecase(instance()));
+    instance.registerFactory<FindProductUsecase>(() =>FindProductUsecase(instance()));
+    instance.registerFactory<ProductBloc>(() =>ProductBloc(instance(),instance(),instance(),instance(),instance()));
   }
 
 
@@ -161,14 +173,16 @@ Future<void>initProductsModule() async{
 Future<void>initEmployeesModule() async{
   if(!GetIt.I.isRegistered<AllEmployeeUsecase>()) {
     instance.registerFactory<AllEmployeeUsecase>(() =>AllEmployeeUsecase(instance()));
+    instance.registerFactory<FindEmployeeUsecase>(() =>FindEmployeeUsecase(instance()));
+
   }
   if(!GetIt.I.isRegistered<DeleteEmployeeUsecase>()) {
     instance.registerFactory<DeleteEmployeeUsecase>(() =>DeleteEmployeeUsecase(instance()));
     instance.registerFactory<ViewEmployeeUsecase>(() =>ViewEmployeeUsecase(instance()));
 //    instance.registerFactory<UpdateEmployeeUsecase>(() =>UpdateEmployeeUsecase(instance()));
-    //  instance.registerFactory<StoreEmployeeUsecase>(() =>StoreEmployeeUsecase(instance()));
+      instance.registerFactory<AddEmployeeUsecase>(() =>AddEmployeeUsecase(instance()));
 
-    instance.registerFactory<EmployeeBloc>(() =>EmployeeBloc(instance(),instance(),instance()));
+    instance.registerFactory<EmployeeBloc>(() =>EmployeeBloc(instance(),instance(),instance(),instance(),instance()));
   }
 
 
@@ -188,6 +202,15 @@ Future<void>initUserNavModule() async{
   }
   if(!GetIt.I.isRegistered<AllProductUsecase>()) {
     instance.registerFactory<AllProductUsecase>(() =>AllProductUsecase(instance()));
+    instance.registerFactory<FindProductUsecase>(() =>FindProductUsecase(instance()));
+
+  }
+  if(!GetIt.I.isRegistered<FindProductUsecase>()) {
+    instance.registerFactory<FindProductUsecase>(() =>FindProductUsecase(instance()));
+
+  }
+  if(!GetIt.I.isRegistered<FindSalonUsecase>()) {
+    instance.registerFactory<FindSalonUsecase>(() =>FindSalonUsecase(instance()));
 
   }
   if(!GetIt.I.isRegistered<UserNavBloc>()) {
@@ -195,7 +218,7 @@ Future<void>initUserNavModule() async{
     instance.registerFactory<AddAppointmentUsecase>(() =>AddAppointmentUsecase(instance()));
 
 
-    instance.registerFactory<UserNavBloc>(() =>UserNavBloc(instance(),instance(),instance(),instance(),instance(),instance()));
+    instance.registerFactory<UserNavBloc>(() =>UserNavBloc(instance(),instance(),instance(),instance(),instance(),instance(),instance(),instance()));
 
   }
 
@@ -208,7 +231,8 @@ Future<void>initCardModule() async{
 }
 Future<void>initAppointmentModule() async{
   if(!GetIt.I.isRegistered<AllAppointmentUsecase>()) {
+    instance.registerFactory<DeleteAppointmentUsecase>(() =>DeleteAppointmentUsecase(instance()));
     instance.registerFactory<AllAppointmentUsecase>(() =>AllAppointmentUsecase(instance()));
-    instance.registerFactory<AppointmentBloc>(() =>AppointmentBloc(instance()));
+    instance.registerFactory<AppointmentBloc>(() =>AppointmentBloc(instance(),instance()));
   }
 }

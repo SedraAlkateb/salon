@@ -7,8 +7,10 @@ import 'package:salon/domain/models/models.dart';
 
 abstract class Repository{
  Future<Either<Failure,Token>>login(LoginRequest loginRequest);
+ Future<Either<Failure,MessageResponse>>logout();
  Future<Either<Failure,Token>>loginAdmin(LoginRequest loginRequest);
  Future<Either<Failure,Token>>customerLogin(LoginRequest loginRequest);
+ Future<Either<Failure,Token>> customerRegister(SignupRequest signupReq);
  Future<Either<Failure,AllAdminModel>>allAdmin();
  Future<Either<Failure,ViewAdmin>>viewAdmin(int id);
  Future<Either<Failure,MessageResponse>>deleteAdmin(int id);
@@ -41,5 +43,11 @@ abstract class Repository{
  Future<Either<Failure,AppointmentsBase>> appointments();
  Future<Either<Failure,ShowAppointment>> showAppointment(int id);
  Future<Either<Failure,MessageResponse>> addService(AddServiceReq addServiceReq);
+ Future<Either<Failure,MessageResponse>> addEmployee(AddEmployeeReq addEmployeeReq);
+ Future<Either<Failure,MessageResponse>> addProduct(AddProductReq addProductReq);
+ Future<Either<Failure,List<SalonModel>>>findSalon( String find,);
+ Future<Either<Failure,List<Product>>>findProduct( String find,);
+ Future<Either<Failure,List<Employees>>> findEmployee(String find,);
+ Future<Either<Failure,AllAdminModel>>findAdmin( String find);
 
 }

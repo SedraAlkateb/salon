@@ -13,7 +13,7 @@ class _AppServiceClient implements AppServiceClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://192.168.137.138:8000/api';
+    baseUrl ??= 'http://192.168.1.10:8000/api';
   }
 
   final Dio _dio;
@@ -21,27 +21,11 @@ class _AppServiceClient implements AppServiceClient {
   String? baseUrl;
 
   @override
-  Future<MessageResponse> changePassword(
-    String old_password,
-    String new_password,
-    String confirm_password,
-  ) async {
+  Future<MessageResponse> logout() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = FormData();
-    _data.fields.add(MapEntry(
-      'old_password',
-      old_password,
-    ));
-    _data.fields.add(MapEntry(
-      'new_password',
-      new_password,
-    ));
-    _data.fields.add(MapEntry(
-      'confirm_password',
-      confirm_password,
-    ));
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
       method: 'POST',
@@ -50,7 +34,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              '/v1/password/change',
+              '/logout',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -89,6 +73,59 @@ class _AppServiceClient implements AppServiceClient {
             .compose(
               _dio.options,
               '/loginSuperAdmin',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = TokenResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<TokenResponse> customerRegister(
+    String name,
+    String password,
+    String c_password,
+    String phone_number,
+    String email,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'name',
+      name,
+    ));
+    _data.fields.add(MapEntry(
+      'password',
+      password,
+    ));
+    _data.fields.add(MapEntry(
+      'c_password',
+      c_password,
+    ));
+    _data.fields.add(MapEntry(
+      'phone_number',
+      phone_number,
+    ));
+    _data.fields.add(MapEntry(
+      'email',
+      email,
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TokenResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/customerRegister',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -688,7 +725,7 @@ class _AppServiceClient implements AppServiceClient {
     ));
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
-      method: 'DELETE',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
@@ -1104,6 +1141,216 @@ class _AppServiceClient implements AppServiceClient {
               baseUrl,
             ))));
     final _value = ShowAppointmentBaseResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<MessageResponse> addEmployee(
+    String name,
+    int salary,
+    File image,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'name',
+      name,
+    ));
+    _data.fields.add(MapEntry(
+      'salary',
+      salary.toString(),
+    ));
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/employee/store',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = MessageResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<MessageResponse> addProduct(
+    String name,
+    String description,
+    int price,
+    int quantity,
+    File image,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'name',
+      name,
+    ));
+    _data.fields.add(MapEntry(
+      'description',
+      description,
+    ));
+    _data.fields.add(MapEntry(
+      'price',
+      price.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'quantity',
+      quantity.toString(),
+    ));
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/product/store',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = MessageResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<SalonsBaseResponse> findSalon(String find) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<SalonsBaseResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/findSalon/${find}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = SalonsBaseResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<ProductsBaseResponse> findProduct(String find) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ProductsBaseResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/findProduct/${find}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ProductsBaseResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<EmployeesBaseResponse> findEmployee(String find) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<EmployeesBaseResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/findEmployee/${find}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = EmployeesBaseResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<AllAdminBaseResponse> findAdmin(String find) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllAdminBaseResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/findAdmin/${find}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = AllAdminBaseResponse.fromJson(_result.data!);
     return _value;
   }
 

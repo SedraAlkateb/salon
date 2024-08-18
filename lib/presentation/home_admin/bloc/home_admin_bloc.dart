@@ -6,6 +6,7 @@ import 'package:salon/data/network/requests/requsets.dart';
 import 'package:salon/domain/models/models.dart';
 import 'package:salon/domain/usecase/all_admin_usecase.dart';
 import 'package:salon/domain/usecase/delete_admin_usecase.dart';
+import 'package:salon/domain/usecase/find_admin_usecase.dart';
 import 'package:salon/domain/usecase/store_admin_usecase.dart';
 import 'package:salon/domain/usecase/update_admin_usecase.dart';
 import 'package:salon/domain/usecase/view_admin_usecase.dart';
@@ -21,6 +22,7 @@ class HomeAdminBloc extends Bloc<HomeAdminEvent, HomeAdminState> {
   ViewAdminUsecase viewAdminUsecase;
   StoreAdminUsecase storeAdminUsecase;
   UpdateAdminUsecase updateAdminUsecase;
+  FindAdminUsecase findAdminUsecase;
   CreateAdminObject createAdminObject=CreateAdminObject(null, null,null);
   List<Admin> allAdmin=[];
   ViewAdmin? viewAdmin;
@@ -39,7 +41,8 @@ class HomeAdminBloc extends Bloc<HomeAdminEvent, HomeAdminState> {
       this.deleteAdminUsecase,
       this.viewAdminUsecase,
       this.storeAdminUsecase,
-    this.updateAdminUsecase
+    this.updateAdminUsecase,
+    this.findAdminUsecase
 
     //  this.salonsUsecase
       ) : super(HomeAdminInitial()
@@ -48,6 +51,7 @@ class HomeAdminBloc extends Bloc<HomeAdminEvent, HomeAdminState> {
     on<HomeAdminEvent>((event, emit)async {
       isBuild=true;
       if(event is AllAdminEvent){
+        allAdmin=[];
         emit(AllAdminLoadingState());
         ( await allAdminUsecase.execute(
       )).fold(
@@ -62,6 +66,22 @@ class HomeAdminBloc extends Bloc<HomeAdminEvent, HomeAdminState> {
 
       );
     }
+      if(event is FindAdmin){
+        allAdmin=[];
+        emit(FindAdminLoadingState());
+        ( await findAdminUsecase.execute(event.find
+        )).fold(
+                (failure)  {
+              isBuild=false;
+              emit(FindAdminErrorState(failure: failure));
+            },
+                (data)  async{
+              allAdmin =data.admin;
+              emit(FindAdminState(allAdminModel: data));
+            }
+
+        );
+      }
       if(event is DeleteAdminEvent){
         emit(DeleteAdminLoadingState());
         ( await deleteAdminUsecase.execute(

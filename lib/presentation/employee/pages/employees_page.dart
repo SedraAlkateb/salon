@@ -11,6 +11,7 @@ import 'package:salon/presentation/resources/assets_manager.dart';
 import 'package:salon/presentation/resources/color_manager.dart';
 import 'package:salon/presentation/resources/routes_manager.dart';
 import 'package:salon/presentation/resources/values_manager.dart';
+import 'package:salon/presentation/uniti/search_field.dart';
 import 'package:salon/presentation/uniti/stateWidget.dart';
 
 class EmployeesPage extends StatefulWidget {
@@ -26,6 +27,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
     BlocProvider.of<EmployeeBloc>(context).add(AllEmployee());
     super.initState();
   }
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +73,15 @@ class _EmployeesPageState extends State<EmployeesPage> {
                   if (state is EmployeesState) {
                     success(context);
                   }
+                  if (state is FindEmployeeErrorState) {
+                    error(context, state.failure.massage, state.failure.code);
+                  }
+                  if (state is FindEmployeeLoadingState) {
+                    loading(context);
+                  }
+                  if (state is FindEmployeeState) {
+                    success(context);
+                  }
                 },
                 builder: (context, state) {
                   List<Employees> employees =
@@ -103,6 +114,23 @@ class _EmployeesPageState extends State<EmployeesPage> {
                                 ),
                               ],
                             ),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SearchField(
+                                  searchController:_searchController,
+                                  onPressed: (){
+                                    BlocProvider.of<EmployeeBloc>(context).add(FindEmployee(_searchController.text));
+                                  },
+                                ),
+                              ),
+                              InkWell(
+                                  onTap: (){
+                                    BlocProvider.of<EmployeeBloc>(context).add(AllEmployee());
+                                  },
+                                  child: Text("All",)),
+                            ],
                           ),
                           ListView.separated(
                             physics: NeverScrollableScrollPhysics(),

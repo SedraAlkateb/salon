@@ -8,6 +8,7 @@ import 'package:salon/presentation/resources/routes_manager.dart';
 import 'package:salon/presentation/resources/values_manager.dart';
 import 'package:salon/presentation/salon/bloc/salon_bloc.dart';
 import 'package:salon/presentation/uniti/image/image.dart';
+import 'package:salon/presentation/uniti/search_field.dart';
 import 'package:salon/presentation/uniti/stateWidget.dart';
 import 'package:salon/presentation/uniti/text.dart';
 
@@ -24,6 +25,7 @@ class _SalonspageState extends State<Salonspage> {
     BlocProvider.of<SalonBloc>(context).add(AllSalon());
     super.initState();
   }
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +71,15 @@ class _SalonspageState extends State<Salonspage> {
                   if (state is SalonsState) {
                     success(context);
                   }
+                  if (state is FindSalonErrorState) {
+                    error(context, state.failure.massage, state.failure.code);
+                  }
+                  if (state is FindSalonLoadingState) {
+                    loading(context);
+                  }
+                  if (state is FindSalonState) {
+                    success(context);
+                  }
                 },
                 builder: (context, state) {
                   List<SalonModel> salons =
@@ -85,7 +96,7 @@ class _SalonspageState extends State<Salonspage> {
                             padding: const EdgeInsets.only(
                                 right: AppPadding.p8,
                                 left: AppPadding.p8,
-                                bottom: AppPadding.p20),
+                                bottom: AppPadding.p8),
                             child: Row(
                               children: [
                                 const Padding(
@@ -101,6 +112,23 @@ class _SalonspageState extends State<Salonspage> {
                                 ),
                               ],
                             ),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SearchField(
+                                    searchController:_searchController,
+                                  onPressed: (){
+                                      BlocProvider.of<SalonBloc>(context).add(FindSalon(_searchController.text));
+                                  },
+                                ),
+                              ),
+                              InkWell(
+                                  onTap: (){
+                                    BlocProvider.of<SalonBloc>(context).add(AllSalon());
+                                  },
+                                  child: Text("All",)),
+                            ],
                           ),
                           ListView.separated(
                             shrinkWrap: true,

@@ -10,6 +10,13 @@ class AllSalon extends SalonEvent {
   // TODO: implement props
   List<Object?> get props =>[];
 }
+class FindSalon extends SalonEvent {
+  String find;
+  FindSalon(this.find);
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[find];
+}
 class DeleteSalonEvent extends SalonEvent {
   final int id;
   final int index;

@@ -741,4 +741,190 @@ class RepositoryImp implements Repository {
           .failure);
     }
   }
+
+  @override
+  Future<Either<Failure, MessageResponse>> addEmployee(AddEmployeeReq addEmployeeReq)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.addEmployee(addEmployeeReq);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageResponse>> addProduct(AddProductReq addProductReq)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.addProduct(addProductReq);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, Token>> customerRegister(SignupRequest signupReq)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.customerRegister(signupReq);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageResponse>> logout()
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.logout();
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, AllAdminModel>> findAdmin(String find)async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.findAdmin(find);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+  @override
+  Future<Either<Failure, List<Employees>>> findEmployee(String find)async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.findEmployee(find);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+  @override
+  Future<Either<Failure, List<Product>>> findProduct(String find) async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.findProduct(find);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<SalonModel>>> findSalon(String find)async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.findSalon(find);
+      if (response.st == null) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
 }
