@@ -55,7 +55,7 @@ abstract class AppServiceClient {
   Future<SalonsBaseResponse> salons(
       );
   @POST("/salon/store")
-  Future<MessageResponse> storeSalon(
+  Future<Message1Response> storeSalon(
       @Part(name: "name") String name,
       @Part(name: "description") String description,
       @Part(name: "logo_image") File logo_image,

@@ -217,10 +217,13 @@ class CreateSalon extends StatelessWidget {
                               loading(context);
                             }
                             if(state is AddSalonErrorState){
-                              error(context,state.failure.massage,state.failure.code);
+                              success(context);
+                             // error(context,state.failure.massage,state.failure.code);
+                              Navigator.of(context).pushNamed(Routes.salons);
                             }
                             if(state is AddSalonState){
-                              Navigator.of(context).pushNamed(Routes.homeAdmin);
+                              success(context);
+                              Navigator.of(context).pushNamed(Routes.salons);
                             }
                           },
                           child: ElevatedButton(

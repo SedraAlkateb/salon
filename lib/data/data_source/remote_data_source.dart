@@ -17,7 +17,7 @@ abstract class RemoteDataSource{
   Future<MessageResponse > storeAdmin(StoreAdminRequest storeAdminRequest);
   Future<ViewAdminBaseResponse > viewAdmin(int id);
   Future<MessageResponse> updateAdmin(UpdateAdminReq updateAdminReq);
-  Future<MessageResponse> storeSalon(StoreSalonModel storeSalonModel);
+  Future<BaseResponse> storeSalon(StoreSalonModel storeSalonModel);
 
   Future<SalonsBaseResponse> salons();
   Future<MessageResponse > deleteSalon(int id);
@@ -151,7 +151,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<MessageResponse> storeSalon(StoreSalonModel storeSalonModel) async {
+  Future<BaseResponse> storeSalon(StoreSalonModel storeSalonModel) async {
     return await _appServiceClient.storeSalon(
       storeSalonModel.name,
       storeSalonModel.description,

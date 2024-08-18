@@ -10,6 +10,18 @@ class BaseResponse {
 }
 //////////ForMessage
 @JsonSerializable()
+class Message1Response extends BaseResponse{
+  Message1Response();
+  // from json
+  factory Message1Response.fromJson(Map<String,dynamic>json)=>
+      _$Message1ResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$Message1ResponseToJson(this);
+}
+
+@JsonSerializable()
 class MessageResponse extends BaseResponse{
   @JsonKey(name: "message")
   String? message;

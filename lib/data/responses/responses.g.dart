@@ -6,6 +6,17 @@ part of 'responses.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+Message1Response _$Message1ResponseFromJson(Map<String, dynamic> json) =>
+    Message1Response()
+      ..st = (json['st'] as num?)?.toInt()
+      ..massage = json['massage'] as String?;
+
+Map<String, dynamic> _$Message1ResponseToJson(Message1Response instance) =>
+    <String, dynamic>{
+      'st': instance.st,
+      'massage': instance.massage,
+    };
+
 MessageResponse _$MessageResponseFromJson(Map<String, dynamic> json) =>
     MessageResponse(
       json['message'] as String?,

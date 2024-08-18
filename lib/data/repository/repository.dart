@@ -263,7 +263,7 @@ class RepositoryImp implements Repository {
         //success
         //return either right
         //return data
-        return Right(response);
+        return Right(MessageResponse("Sucssec"));
       } else {
         //return either left
         //failure --business error

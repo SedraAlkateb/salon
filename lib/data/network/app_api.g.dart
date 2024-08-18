@@ -366,7 +366,7 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<MessageResponse> storeSalon(
+  Future<Message1Response> storeSalon(
     String name,
     String description,
     File logo_image,
@@ -406,7 +406,7 @@ class _AppServiceClient implements AppServiceClient {
       longitude,
     ));
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<MessageResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<Message1Response>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -422,7 +422,7 @@ class _AppServiceClient implements AppServiceClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = MessageResponse.fromJson(_result.data!);
+    final _value = Message1Response.fromJson(_result.data!);
     return _value;
   }
 
