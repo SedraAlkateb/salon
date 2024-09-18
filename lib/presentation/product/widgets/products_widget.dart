@@ -8,6 +8,8 @@ import 'package:salon/presentation/resources/values_manager.dart';
 import 'package:salon/presentation/product/bloc/product_bloc.dart';
 import 'package:salon/presentation/uniti/image/image.dart';
 import 'package:salon/presentation/uniti/text.dart';
+
+
 class ProductsWidget extends StatelessWidget {
   const ProductsWidget({super.key,required this.product,required this.index});
   final Product product;
